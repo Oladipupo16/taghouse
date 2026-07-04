@@ -39,6 +39,22 @@
         </svg>
         List Now
       </a>
+
+      <!-- Mobile hamburger -->
+      <button class="hamburger" id="hamburger" aria-label="Open menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <!-- Mobile nav menu -->
+      <nav class="mobile-menu" id="mobileMenu">
+        <a href="index.html">Home</a>
+        <a href="buyer.html">Find Property</a>
+        <a href="owner.html">List Property</a>
+        <a href="agents.html">Agents</a>
+        <a href="about.html">About</a>
+      </nav>
     </header>
 
     <main id="top">
@@ -619,5 +635,15 @@
     </dialog>
 
     <script src="app.js"></script>
+
+    <script>
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  if (hamburger) {
+    hamburger.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+    });
+  }
+</script>
   </body>
 </html>
