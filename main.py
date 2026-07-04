@@ -259,5 +259,11 @@ def serve_index():
 def serve_page(page: str):
     return FileResponse(f"{page}.html")
 @app.get("/app.js")
+
+def serve_css():
+    return FileResponse("styles.css", media_type="text/css")
+
+@app.get("/app.js")
 def serve_js():
     return FileResponse("app.js", media_type="application/javascript")
+    
