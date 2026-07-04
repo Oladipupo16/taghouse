@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TagHouse | Nigeria's #1 Real Estate Marketplace</title>
+    <meta
+      name="description"
+      content="Discover verified properties for rent, sale, and lease across Nigeria. Connect with trusted agents and complete transactions in days, not weeks."
+    />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="TagHouse">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" role="img">
+            <path
+              d="M3 11.2 12 4l9 7.2v8.1a1.7 1.7 0 0 1-1.7 1.7h-4.4v-6.2H9.1V21H4.7A1.7 1.7 0 0 1 3 19.3v-8.1Z"
+            />
+            <path d="M9 21v-6.2h6V21" />
+          </svg>
+        </span>
+        <span>TagHouse</span>
+      </a>
+
+      <nav class="main-nav" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="buyer.html">Find Property</a>
+        <a href="owner.html">List Property</a>
+        <a href="agents.html">Agents</a>
+        <a href="about.html">About</a>
+      </nav>
+
+      <a class="header-action" href="owner.html">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 5v14M5 12h14" />
+        </svg>
+        List Now
+      </a>
+    </header>
+
+    <main id="top">
+      <section class="hero-section" aria-labelledby="hero-title">
+        <div class="hero-content">
+          <p class="eyebrow">Verified property marketplace</p>
+          <h1 id="hero-title">Find Your Perfect Property</h1>
+          <p class="hero-copy">
+            Discover verified apartments, houses, land, and commercial spaces
+            across Nigeria. Transparent pricing, trusted agents, and fast
+            transactions.
+          </p>
+
+          <form
+            class="search-shell"
+            id="searchForm"
+            aria-label="Search properties"
+          >
+            <div class="search-tabs" role="group" aria-label="Transaction type">
+              <button
+                class="tab-button active"
+                type="button"
+                data-purpose="all"
+              >
+                All
+              </button>
+              <button class="tab-button" type="button" data-purpose="">
+                Rent
+              </button>
+              <button class="tab-button" type="button" data-purpose="sale">
+                Buy
+              </button>
+              <button class="tab-button" type="button" data-purpose="lease">
+                Lease
+              </button>
+            </div>
+
+            <div class="search-grid">
+              <label>
+                <span>Location</span>
+                <select id="locationFilter">
+                  <option value="all">Any location</option>
+                  <option value="Lagos">Lagos</option>
+                  <option value="Abuja">Abuja</option>
+                  <option value="Port Harcourt">Port Harcourt</option>
+                  <option value="Ibadan">Ibadan</option>
+                  <option value="MainLand">MainLand</option>
+                  <option value="Island">Island</option>
+                </select>
+              </label>
+
+              <label>
+                <span>Property</span>
+                <select id="propertyFilter">
+                  <option value="all">Any property</option>
+                  <option value="Apartment">Apartment</option>
+                  <option value="House">House</option>
+                  <option value="Land">Land</option>
+                  <option value="Commercial">Commercial</option>
+                </select>
+              </label>
+
+              <label>
+                <span>Budget</span>
+                <select id="budgetFilter">
+                  <option value="all">Any budget</option>
+                  <option value="1000000">Under ₦1m</option>
+                  <option value="5000000">Under ₦5m</option>
+                  <option value="30000000">Under ₦30m</option>
+                  <option value="100000000">Under ₦100m</option>
+                </select>
+              </label>
+
+              <button class="primary-button" type="submit">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="m21 21-4.35-4.35M10.8 18a7.2 7.2 0 1 1 0-14.4 7.2 7.2 0 0 1 0 14.4Z"
+                  />
+                </svg>
+                Search
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div
+          class="hero-visual"
+          aria-label="Featured housing and land listings"
+        >
+          <img
+            src="assets/hero-market.svg"
+            alt="Modern apartments, land plot, and listing preview"
+          />
+        </div>
+      </section>
+
+      <section class="metrics-band" aria-label="Marketplace highlights">
+        <div>
+          <strong>1,240+</strong>
+          <span>verified listings</span>
+        </div>
+        <div>
+          <strong>320+</strong>
+          <span>trusted agents</span>
+        </div>
+        <div>
+          <strong>50K+</strong>
+          <span>active users</span>
+        </div>
+        <div>
+          <strong>2h</strong>
+          <span>average response</span>
+        </div>
+      </section>
+
+      <section
+        class="section services-section"
+        id="services"
+        aria-labelledby="services-title"
+      >
+        <div class="section-heading">
+          <p class="eyebrow">What we offer</p>
+          <h2 id="services-title">Complete Real Estate Solutions</h2>
+        </div>
+
+        <div class="service-grid">
+          <article class="service-item">
+            <span class="service-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="M4 20V9l8-5 8 5v11M9 20v-7h6v7" />
+              </svg>
+            </span>
+            <h3>Rent Apartments</h3>
+            <p>
+              Find verified apartments, duplexes, and serviced spaces. Filter by
+              budget, amenities, and location instantly.
+            </p>
+          </article>
+
+          <article class="service-item">
+            <span class="service-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="M5 11h14M7 7h10M8 15h8M10 19h4" />
+              </svg>
+            </span>
+            <h3>Buy & Sell Homes</h3>
+            <p>
+              Access exclusive listings with verified titles. Connect buyers and
+              sellers securely with transparent pricing.
+            </p>
+          </article>
+
+          <article class="service-item">
+            <span class="service-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="M4 18 9 5l5 13 2-6 4 6H4Z" />
+              </svg>
+            </span>
+            <h3>Lease Land</h3>
+            <p>
+              Discover residential, agricultural, and commercial land. Clear
+              titles, fair pricing, and verified lease terms.
+            </p>
+          </article>
+
+          <article class="service-item">
+            <span class="service-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="M4 7h16v13H4zM8 7V4h8v3M8 12h8M8 16h5" />
+              </svg>
+            </span>
+            <h3>Commercial Spaces</h3>
+            <p>
+              Find offices, shops, warehouses, and mixed-use properties. Ready
+              for immediate occupancy or investment.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section
+        class="listings-section"
+        id="listings"
+        aria-labelledby="listings-title"
+      >
+        <div class="section-heading listing-heading">
+          <div>
+            <p class="eyebrow">Live marketplace</p>
+            <h2 id="listings-title">Featured Listings</h2>
+          </div>
+          <p id="resultSummary" class="result-summary" aria-live="polite"></p>
+        </div>
+
+        <div class="quick-filters" aria-label="Quick listing filters">
+          <button type="button" class="chip active" data-quick="all">
+            All
+          </button>
+          <button type="button" class="chip" data-quick="Apartment">
+            Apartments
+          </button>
+          <button type="button" class="chip" data-quick="Land">Land</button>
+          <button type="button" class="chip" data-quick="House">Houses</button>
+          <button type="button" class="chip" data-quick="Commercial">
+            Commercial
+          </button>
+        </div>
+
+        <div class="listing-grid" id="listingGrid"></div>
+        <div class="empty-state" id="emptyState" hidden>
+          <h3>No listings match those filters</h3>
+          <p>Try a wider location, property type, or budget range.</p>
+        </div>
+      </section>
+
+      <section class="split-section" id="agents" aria-labelledby="agents-title">
+        <div class="split-copy">
+          <p class="eyebrow">For buyers and renters</p>
+          <h2 id="agents-title">Book Inspections with Confidence</h2>
+          <p>
+            Each listing shows verified agent profiles, property documents,
+            inspection availability, and direct contact options. Move from
+            discovery to negotiation in hours, not weeks.
+          </p>
+          <div class="agent-list">
+            <div>
+              <strong>Verified Agents</strong>
+              <span
+                >All agents are verified with background checks and customer
+                ratings.</span
+              >
+            </div>
+            <div>
+              <strong>Smart Shortlists</strong>
+              <span
+                >Save favorite properties and compare side-by-side
+                anytime.</span
+              >
+            </div>
+            <div>
+              <strong>Instant Inspections</strong>
+              <span
+                >Schedule tours with agents. Typical response time: under 2
+                hours.</span
+              >
+            </div>
+          </div>
+        </div>
+        <div class="inspection-panel">
+          <div class="inspection-tabs">
+            <button class="inspection-tab active" data-tab="schedule">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="3" y="4" width="18" height="18" rx="2" />
+                <path d="M16 2v4M8 2v4M3 10h18" />
+              </svg>
+              Schedule
+            </button>
+            <button class="inspection-tab" data-tab="checklist">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 11l3 3 8-8M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              Checklist
+            </button>
+          </div>
+
+          <div class="inspection-content">
+            <div class="inspection-tab-panel active" id="schedule-panel">
+              <h4>Your Upcoming Inspections</h4>
+              <div class="inspection-schedule">
+                <div class="schedule-item">
+                  <div class="schedule-date">
+                    <span class="day">14</span><span class="month">Jun</span>
+                  </div>
+                  <div class="schedule-info">
+                    <p class="time">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <circle cx="12" cy="12" r="10" />
+                        <polyline points="12 6 12 12 16 14" /></svg
+                      >2:00 PM - 3:00 PM
+                    </p>
+                    <p class="property">Lekki Serviced Apartment</p>
+                    <p class="agent">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path
+                          d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 7a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"
+                        /></svg
+                      >John Okafor • BrightStone Realty
+                    </p>
+                  </div>
+                  <button class="reschedule-btn">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <polyline points="23 4 23 10 17 10" />
+                      <polyline points="1 20 1 14 7 14" />
+                      <path
+                        d="M3.51 9a9 9 0 0 1 14.85-3.36M20.49 15a9 9 0 0 1-14.85 3.36"
+                      />
+                    </svg>
+                  </button>
+                </div>
+                <div class="schedule-item">
+                  <div class="schedule-date">
+                    <span class="day">16</span><span class="month">Jun</span>
+                  </div>
+                  <div class="schedule-info">
+                    <p class="time">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <circle cx="12" cy="12" r="10" />
+                        <polyline points="12 6 12 12 16 14" /></svg
+                      >10:00 AM - 11:30 AM
+                    </p>
+                    <p class="property">Abuja Detached House</p>
+                    <p class="agent">
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path
+                          d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 7a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"
+                        /></svg
+                      >Amara Okeke • Cedar Gate Homes
+                    </p>
+                  </div>
+                  <button class="reschedule-btn">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <polyline points="23 4 23 10 17 10" />
+                      <polyline points="1 20 1 14 7 14" />
+                      <path
+                        d="M3.51 9a9 9 0 0 1 14.85-3.36M20.49 15a9 9 0 0 1-14.85 3.36"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="inspection-tab-panel" id="checklist-panel">
+              <h4>Property Inspection Checklist</h4>
+              <div class="property-checklist">
+                <div class="checklist-section">
+                  <h5>Structural</h5>
+                  <label class="checklist-item"
+                    ><input type="checkbox" checked /><span
+                      >Roof condition & leaks</span
+                    ></label
+                  >
+                  <label class="checklist-item"
+                    ><input type="checkbox" checked /><span
+                      >Foundation integrity</span
+                    ></label
+                  >
+                  <label class="checklist-item"
+                    ><input type="checkbox" /><span
+                      >Wall cracks & settling</span
+                    ></label
+                  >
+                </div>
+                <div class="checklist-section">
+                  <h5>Systems</h5>
+                  <label class="checklist-item"
+                    ><input type="checkbox" checked /><span
+                      >Electrical wiring</span
+                    ></label
+                  >
+                  <label class="checklist-item"
+                    ><input type="checkbox" checked /><span
+                      >Water & plumbing</span
+                    ></label
+                  >
+                  <label class="checklist-item"
+                    ><input type="checkbox" /><span>Generator/HVAC</span></label
+                  >
+                </div>
+                <div class="checklist-section">
+                  <h5>Interiors</h5>
+                  <label class="checklist-item"
+                    ><input type="checkbox" checked /><span
+                      >Doors & windows</span
+                    ></label
+                  >
+                  <label class="checklist-item"
+                    ><input type="checkbox" checked /><span
+                      >Kitchen appliances</span
+                    ></label
+                  >
+                  <label class="checklist-item"
+                    ><input type="checkbox" /><span
+                      >Flooring & tiles</span
+                    ></label
+                  >
+                </div>
+              </div>
+              <p class="checklist-note">
+                ✓ Checked items verified. Mark items as you inspect.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="list-property-section"
+        id="list-property"
+        aria-labelledby="list-property-title"
+      >
+        <div class="section-heading">
+          <p class="eyebrow">For owners and agents</p>
+          <h2 id="list-property-title">List Your Property & Get Results</h2>
+        </div>
+
+        <form class="owner-form" id="ownerForm">
+          <label>
+            <span>Property title</span>
+            <input
+              id="ownerTitle"
+              name="title"
+              type="text"
+              placeholder="Example: 3-bedroom apartment in Lekki"
+              required
+            />
+          </label>
+
+          <label>
+            <span>Listing type</span>
+            <select id="ownerType" name="type" required>
+              <option value="">Choose type</option>
+              <option>Rent</option>
+              <option>Sale</option>
+              <option>Lease</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Location</span>
+            <input
+              id="ownerLocation"
+              name="location"
+              type="text"
+              placeholder="City or area"
+              required
+            />
+          </label>
+
+          <label>
+            <span>Expected price</span>
+            <input
+              id="ownerPrice"
+              name="price"
+              type="text"
+              placeholder="Example: ₦2,500,000 yearly"
+              required
+            />
+          </label>
+
+          <label class="wide">
+            <span>Property details</span>
+            <textarea
+              id="ownerDetails"
+              name="details"
+              rows="4"
+              placeholder="Add bedrooms, land size, title documents, amenities, and inspection notes"
+              required
+            ></textarea>
+          </label>
+
+          <label class="wide">
+            <span>Property images</span>
+            <input
+              id="ownerImages"
+              name="images"
+              type="file"
+              accept="image/*"
+              multiple
+            />
+            <small
+              >Select one or more images. Formats: JPG, PNG, GIF (max 5MB per
+              image)</small
+            >
+          </label>
+
+          <button class="primary-button wide" type="submit">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+            Submit listing request
+          </button>
+
+          <p class="form-status wide" id="formStatus" role="status"></p>
+        </form>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <a class="brand footer-brand" href="index.html">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" role="img">
+              <path
+                d="M3 11.2 12 4l9 7.2v8.1a1.7 1.7 0 0 1-1.7 1.7h-4.4v-6.2H9.1V21H4.7A1.7 1.7 0 0 1 3 19.3v-8.1Z"
+              />
+              <path d="M9 21v-6.2h6V21" />
+            </svg>
+          </span>
+          <span>TagHouse</span>
+        </a>
+        <p>
+          Nigeria's most trusted real estate marketplace. Making property
+          transactions transparent, secure, and fast.
+        </p>
+      </div>
+
+      <div class="footer-section">
+        <h5>Quick Links</h5>
+        <div class="footer-links">
+          <a href="buyer.html">Find Property</a>
+          <a href="owner.html">List Property</a>
+          <a href="agents.html">Find Agents</a>
+          <a href="contact.html">Contact Us</a>
+        </div>
+      </div>
+
+      <div class="footer-section">
+        <h5>Company</h5>
+        <div class="footer-links">
+          <a href="about.html">About Us</a>
+          <a href="blog.html">Blog & Insights</a>
+          <a href="careers.html">Careers</a>
+          <a href="faq.html">FAQ</a>
+        </div>
+      </div>
+
+      <div class="footer-section">
+        <h5>Get in Touch</h5>
+        <div class="footer-links">
+          <a href="tel:+2341234567890">+234 (0) 123 456 7890</a>
+          <a href="mailto:support@taghouse.com">support@taghouse.com</a>
+          <p
+            style="
+              margin: 12px 0 0;
+              color: rgba(255, 255, 255, 0.7);
+              font-size: 0.85rem;
+            "
+          >
+            Available Mon-Sat, 8am-6pm WAT
+          </p>
+        </div>
+        <div class="footer-social">
+          <a href="https://twitter.com/taghouse" aria-label="Twitter">𝕏</a>
+          <a href="https://facebook.com/taghouse" aria-label="Facebook">f</a>
+          <a href="https://instagram.com/taghouse" aria-label="Instagram">📷</a>
+          <a href="https://linkedin.com/company/taghouse" aria-label="LinkedIn"
+            >in</a
+          >
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>&copy; 2026 TagHouse. All rights reserved.</span>
+        <div class="footer-legal">
+          <a href="privacy-policy.html">Privacy Policy</a>
+          <a href="terms-of-service.html">Terms of Service</a>
+          <a href="contact.html">Cookie Settings</a>
+        </div>
+      </div>
+    </footer>
+
+    <dialog
+      class="listing-dialog"
+      id="listingDialog"
+      aria-labelledby="dialogTitle"
+    >
+      <button
+        class="dialog-close"
+        id="dialogClose"
+        type="button"
+        aria-label="Close listing details"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6 6l12 12M18 6 6 18" />
+        </svg>
+      </button>
+      <div id="dialogContent"></div>
+    </dialog>
+
+    <script src="app.js"></script>
+  </body>
+</html>

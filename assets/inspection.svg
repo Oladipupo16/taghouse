@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 500" role="img" aria-label="Property inspection dashboard">
+  <rect width="760" height="500" rx="24" fill="#fffdf8"/>
+  <rect x="44" y="42" width="672" height="416" rx="14" fill="#f8f2e8"/>
+  <rect x="74" y="76" width="270" height="348" rx="8" fill="#ffffff"/>
+  <rect x="376" y="76" width="310" height="150" rx="8" fill="#ffffff"/>
+  <rect x="376" y="254" width="310" height="170" rx="8" fill="#ffffff"/>
+  <path d="M102 128h184M102 164h130" stroke="#18201d" stroke-width="14" stroke-linecap="round"/>
+  <rect x="102" y="212" width="204" height="122" rx="8" fill="#dff1e8"/>
+  <path d="M122 306 170 238l45 68 24-36 48 36Z" fill="#136b4c"/>
+  <circle cx="546" cy="150" r="48" fill="#d99f31"/>
+  <path d="M518 150h56M546 122v56" stroke="#fffdf8" stroke-width="12" stroke-linecap="round"/>
+  <g fill="#136b4c">
+    <rect x="414" y="294" width="42" height="42" rx="6"/>
+    <rect x="414" y="354" width="42" height="42" rx="6"/>
+  </g>
+  <path d="M480 308h154M480 368h120" stroke="#18201d" stroke-width="12" stroke-linecap="round"/>
+  <path d="m424 314 10 10 20-22M424 374l10 10 20-22" stroke="#fffdf8" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+</svg>

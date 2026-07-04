@@ -1,0 +1,161 @@
+{
+  "listings": [
+    {
+      "id": 1,
+      "title": "Serviced 2-bedroom apartment near Admiralty Way",
+      "purpose": "rent",
+      "category": "Apartment",
+      "location": "Lekki",
+      "price": 3200000,
+      "priceLabel": "₦3.2m / year",
+      "specs": [
+        "2 beds",
+        "3 baths",
+        "Parking"
+      ],
+      "image": "assets/apartmentone/building-outdoor.jpeg",
+       "images": [
+        "assets/apartmentone/livingroom.jpeg",
+        "assets/apartmentone/firstroom.jpeg",
+        "assets/apartmentone/masterbedroom.jpeg",
+        "assets/apartmentone/kitchen.jpeg",
+        "assets/apartmentone/restroom.jpeg"
+      ],
+      "agent": "BrightStone Realty",
+      "description": "A furnished apartment with standby power, security, water treatment, and quick access to major roads.",
+      "status": "active",
+      "createdAt": "2026-05-27T00:00:00.000Z"
+    },
+    {
+      "id": 2,
+      "title": "Dry residential land with survey and deed",
+      "purpose": "sale",
+      "category": "Land",
+      "location": "Lagos",
+      "price": 18500000,
+      "priceLabel": "₦18.5m",
+      "specs": [
+        "500 sqm",
+        "Dry land",
+        "Good access"
+      ],
+      "image": "assets/dryland/dryland1.jpeg",
+      "images": [
+        "assets/dryland/dryland1.jpeg",
+        "assets/dryland/dryland2.png",
+        "assets/dryland/dryland3.png"
+      ],
+      "agent": "Prime Acre Partners",
+      "description": "A fenced plot in a growing residential estate, suitable for a family home or medium-term investment.",
+      "status": "active",
+      "createdAt": "2026-05-27T00:00:00.000Z"
+    },
+    {
+      "id": 3,
+      "title": "4-bedroom detached house with boys' quarters",
+      "purpose": "sale",
+      "category": "House",
+      "location": "Abuja",
+      "price": 95000000,
+      "priceLabel": "₦450m",
+      "specs": [
+        "4 beds",
+        "5 baths",
+        "Bq"
+      ],
+      "image": "assets/4bedroom-abuja/outside.jpeg",
+      "images": [
+      "assets/4bedroom-abuja/outside.jpeg",
+      "assets/4bedroom-abuja/livingroom.jpeg",
+      "assets/4bedroom-abuja/bedroom.jpeg",
+      "assets/4bedroom-abuja/bathroom.jpeg",
+      "assets/4bedroom-abuja/kitchen.jpeg",
+      "assets/4bedroom-abuja/bQ.jpeg",
+      "assets/4bedroom-abuja/gym.jpeg"
+
+      ],
+      "agent": "Cedar Gate Homes",
+      "description": "Spacious detached home with fitted kitchen, family lounge, green area, and secure estate access.",
+      "status": "active",
+      "createdAt": "2026-05-27T00:00:00.000Z"
+    },
+    {
+      "id": 4,
+      "title": "Open-plan office suite for growing teams",
+      "purpose": "lease",
+      "category": "Commercial",
+      "location": "Port Harcourt",
+      "price": 4800000,
+      "priceLabel": "₦4.8m / year",
+      "specs": [
+        "120 sqm",
+        "Generator",
+        "Reception"
+      ],
+      "image": "assets/office-port/outdoor.jpeg",
+      "images": [
+        "assets/office-port/outdoor.jpeg",
+        "assets/office-port/reception.jpeg",
+        "assets/office-port/openoffice.jpeg",
+        "assets/office-port/conferenceroom.jpeg",
+        "assets/office-port/ideahub.jpeg"
+      ],
+      "agent": "HarborPoint Agency",
+      "description": "Flexible office space with meeting room, reliable power options, and a central business location.",
+      "status": "active",
+      "createdAt": "2026-05-27T00:00:00.000Z"
+    },
+    {
+      "id": 5,
+      "title": "Student-friendly mini flat in gated compound",
+      "purpose": "rent",
+      "category": "Apartment",
+      "location": "Ibadan",
+      "price": 850000,
+      "priceLabel": "₦850k / year",
+      "specs": [
+        "1 bed",
+        "1 bath",
+        "Prepaid meter"
+      ],
+      "image": "assets/student-mini/entrance.jpeg",
+      "images": [
+        "assets/student-mini/entrance.jpeg",
+        "assets/student-mini/livingroom.jpeg",
+        "assets/student-mini/bedroom.jpeg",
+        "assets/student-mini/kitchen.jpeg",
+        "assets/student-mini/nightlife.jpeg"
+      ],
+      "agent": "MetroLet Managers",
+      "description": "Compact mini flat with tiled rooms, personal meter, borehole water, and easy commute to campus areas.",
+      "status": "active",
+      "createdAt": "2026-05-27T00:00:00.000Z"
+    },
+    {
+      "id": 6,
+      "title": "Long-lease mixed-use land on major road",
+      "purpose": "lease",
+      "category": "Land",
+      "location": "Abuja",
+      "price": 12500000,
+      "priceLabel": "₦12.5m / year",
+      "specs": [
+        "1,200 sqm",
+        "Corner plot",
+        "C of O"
+      ],
+      "image": "assets/big-lease/droneview.jpeg",
+      "images": [
+        "assets/big-lease/droneview.jpeg",
+        "assets/big-lease/roadside.jpeg",
+        "assets/big-lease/fencing.jpeg"
+      ],
+      "agent": "Northfield Assets",
+      "description": "Strategic lease opportunity for showroom, quick-service retail, logistics yard, or hospitality project.",
+      "status": "active",
+      "createdAt": "2026-05-27T00:00:00.000Z"
+    }
+  ],
+  "listingRequests": [],
+  "enquiries": []
+}

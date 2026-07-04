@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 450" role="img" aria-label="Detached family house">
+  <rect width="720" height="450" fill="#eef4f0"/>
+  <path d="M0 348h720v102H0z" fill="#dff1e8"/>
+  <path d="M132 210 342 76l220 134v160H132z" fill="#fffdf8"/>
+  <path d="M102 218 342 58l250 160" stroke="#c85d3d" stroke-width="36" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <rect x="218" y="242" width="80" height="128" rx="4" fill="#d99f31"/>
+  <rect x="354" y="246" width="110" height="72" rx="6" fill="#136b4c"/>
+  <rect x="482" y="246" width="50" height="72" rx="6" fill="#136b4c"/>
+  <path d="M218 370h344" stroke="#18201d" stroke-width="12" stroke-linecap="round" opacity=".18"/>
+  <circle cx="118" cy="318" r="42" fill="#136b4c"/>
+  <path d="M118 280v86M88 330c30-25 52-39 82-42" stroke="#fffdf8" stroke-width="8" stroke-linecap="round"/>
+</svg>

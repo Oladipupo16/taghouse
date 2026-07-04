@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>List Your Property | TagHouse</title>
+    <meta name="description" content="List your apartment, house, land, or commercial space. Reach verified buyers and renters quickly." />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="TagHouse home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" role="img">
+            <path d="M3 11.2 12 4l9 7.2v8.1a1.7 1.7 0 0 1-1.7 1.7h-4.4v-6.2H9.1V21H4.7A1.7 1.7 0 0 1 3 19.3v-8.1Z" />
+            <path d="M9 21v-6.2h6V21" />
+          </svg>
+        </span>
+        <span>TagHouse</span>
+      </a>
+
+      <nav class="main-nav" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="buyer.html">Find Property</a>
+        <a href="owner.html" class="active">List Property</a>
+        <a href="agents.html">Agents</a>
+        <a href="about.html">About</a>
+      </nav>
+
+      <a class="header-action" href="owner.html">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 5v14M5 12h14" />
+        </svg>
+        List Now
+      </a>
+    </header>
+
+    <main>
+      <section class="owner-hero" aria-labelledby="owner-title">
+        <div class="hero-content">
+          <p class="eyebrow">For owners and agents</p>
+          <h1 id="owner-title">List Your Property in Minutes</h1>
+          <p class="hero-copy">
+            Reach verified buyers and renters across Nigeria. Upload images, set your price, and start receiving inquiries today.
+          </p>
+        </div>
+      </section>
+
+      <section class="list-property-section" aria-labelledby="list-property-title">
+        <div class="section-heading">
+          <p class="eyebrow">Get started</p>
+          <h2 id="list-property-title">List a Property</h2>
+        </div>
+
+        <form class="owner-form" id="ownerForm">
+          <label>
+            <span>Property title</span>
+            <input
+              id="ownerTitle"
+              name="title"
+              type="text"
+              placeholder="Example: 3-bedroom apartment in Lekki"
+              required
+            />
+          </label>
+
+          <label>
+            <span>Listing type</span>
+            <select id="ownerType" name="type" required>
+              <option value="">Choose type</option>
+              <option>Rent</option>
+              <option>Sale</option>
+              <option>Lease</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Location</span>
+            <input
+              id="ownerLocation"
+              name="location"
+              type="text"
+              placeholder="City or area"
+              required
+            />
+          </label>
+
+          <label>
+            <span>Expected price</span>
+            <input
+              id="ownerPrice"
+              name="price"
+              type="text"
+              placeholder="Example: ₦2,500,000 yearly"
+              required
+            />
+          </label>
+
+          <label class="wide">
+            <span>Property details</span>
+            <textarea
+              id="ownerDetails"
+              name="details"
+              rows="4"
+              placeholder="Add bedrooms, land size, title documents, amenities, and inspection notes"
+              required
+            ></textarea>
+          </label>
+
+          <label class="wide">
+            <span>Property images</span>
+            <input
+              id="ownerImages"
+              name="images"
+              type="file"
+              accept="image/*"
+              multiple
+            />
+            <small>Select one or more images. Formats: JPG, PNG, GIF (max 5MB per image)</small>
+          </label>
+
+          <button class="primary-button wide" type="submit">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+            Submit listing request
+          </button>
+
+          <p class="form-status wide" id="formStatus" role="status"></p>
+        </form>
+      </section>
+
+      <section class="benefits-section">
+        <div class="section-heading">
+          <p class="eyebrow">Why list with us</p>
+          <h2>Get Results Faster</h2>
+        </div>
+
+        <div class="benefits-grid">
+          <div class="benefit-card">
+            <div class="benefit-icon">📊</div>
+            <h3>Wider Reach</h3>
+            <p>Your property reaches 1,000+ active buyers and renters daily across all major cities.</p>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon">⚡</div>
+            <h3>Fast Inquiries</h3>
+            <p>Average response time is under 24 hours. Most listings get serious inquiries within days.</p>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon">✅</div>
+            <h3>Verified Users</h3>
+            <p>All buyers and renters are verified, saving you time on unqualified leads.</p>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon">🛡️</div>
+            <h3>Secure Platform</h3>
+            <p>Protected messaging and built-in escrow for safe transactions.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <a class="brand footer-brand" href="index.html">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" role="img">
+              <path d="M3 11.2 12 4l9 7.2v8.1a1.7 1.7 0 0 1-1.7 1.7h-4.4v-6.2H9.1V21H4.7A1.7 1.7 0 0 1 3 19.3v-8.1Z" />
+              <path d="M9 21v-6.2h6V21" />
+            </svg>
+          </span>
+          <span>TagHouse</span>
+        </a>
+        <p>Reach verified buyers and renters. List your property in minutes with full support.</p>
+      </div>
+      <div class="footer-section">
+        <h5>Quick Links</h5>
+        <div class="footer-links">
+          <a href="buyer.html">Find Property</a>
+          <a href="owner.html">List Property</a>
+          <a href="agents.html">Find Agents</a>
+          <a href="contact.html">Contact Us</a>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h5>Company</h5>
+        <div class="footer-links">
+          <a href="about.html">About Us</a>
+          <a href="blog.html">Blog</a>
+          <a href="careers.html">Careers</a>
+          <a href="faq.html">FAQ</a>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h5>Get in Touch</h5>
+        <div class="footer-links">
+          <a href="tel:+2341234567890">+234 (123) 456-7890</a>
+          <a href="mailto:agents@taghouse.com">agents@taghouse.com</a>
+          <p style="margin: 12px 0 0; color: rgba(255, 255, 255, 0.7); font-size: 0.85rem;">24/7 agent support</p>
+        </div>
+        <div class="footer-social">
+          <a href="#" aria-label="Twitter">𝕏</a>
+          <a href="#" aria-label="Facebook">f</a>
+          <a href="#" aria-label="Instagram">📷</a>
+          <a href="#" aria-label="LinkedIn">in</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 TagHouse. All rights reserved.</span>
+        <div class="footer-legal">
+          <a href="privacy-policy.html">Privacy Policy</a>
+          <a href="terms-of-service.html">Terms of Service</a>
+          <a href="#cookies">Cookie Settings</a>
+        </div>
+      </div>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>

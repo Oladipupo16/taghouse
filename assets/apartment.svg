@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 450" role="img" aria-label="Serviced apartment building">
+  <rect width="720" height="450" fill="#f6ead9"/>
+  <path d="M0 350c92-48 184-54 276-18 146 58 268 40 444-42v160H0z" fill="#dff1e8"/>
+  <rect x="124" y="98" width="310" height="268" rx="6" fill="#fffdf8"/>
+  <rect x="184" y="58" width="310" height="308" rx="6" fill="#ffffff"/>
+  <path d="M184 58h310l-52-38H236z" fill="#c85d3d"/>
+  <g fill="#136b4c">
+    <rect x="224" y="100" width="46" height="46" rx="5"/>
+    <rect x="312" y="100" width="46" height="46" rx="5"/>
+    <rect x="400" y="100" width="46" height="46" rx="5"/>
+    <rect x="224" y="182" width="46" height="46" rx="5"/>
+    <rect x="312" y="182" width="46" height="46" rx="5"/>
+    <rect x="400" y="182" width="46" height="46" rx="5"/>
+    <rect x="224" y="264" width="46" height="46" rx="5"/>
+    <rect x="400" y="264" width="46" height="46" rx="5"/>
+  </g>
+  <rect x="306" y="270" width="62" height="96" fill="#d99f31"/>
+  <rect x="525" y="238" width="98" height="78" rx="5" fill="#18201d"/>
+  <circle cx="546" cy="334" r="18" fill="#18201d"/>
+  <circle cx="603" cy="334" r="18" fill="#18201d"/>
+  <path d="M84 366h580" stroke="#18201d" stroke-width="10" stroke-linecap="round" opacity=".18"/>
+</svg>

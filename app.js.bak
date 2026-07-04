@@ -1,0 +1,553 @@
+const fallbackListings = [
+  {
+    id: 1,
+    title: "Serviced 2-bedroom apartment near Admiralty Way",
+    purpose: "rent",
+    category: "Apartment",
+    location: "MainLand",
+    price: 3200000,
+    priceLabel: "₦3.2m / year",
+    specs: ["2 beds", "3 baths", "Parking"],
+    image: "assets/apartmentone/building-outdoor.jpeg",
+    images: [
+      "assets/apartmentone/building-outdoor.jpeg",
+      "assets/apartmentone/livingroom.jpeg",
+      "assets/apartmentone/firstroom.jpeg",
+      "assets/apartmentone/masterbedroom.jpeg",
+      "assets/apartmentone/kitchen.jpeg",
+      "assets/apartmentone/restroom.jpeg"
+    ],
+    agent: "BrightStone Realty",
+    description:
+      "A furnished apartment with standby power, security, water treatment, and quick access to major roads.",
+  },
+  {
+    id: 2,
+    title: "Dry residential land with survey and deed",
+    purpose: "sale",
+    category: "Land",
+    location: "Lagos",
+    price: 18500000,
+    priceLabel: "₦18.5m",
+    specs: ["500 sqm", "Dry land", "Good access"],
+    image: "assets/dryland/dryland1.jpeg",
+    images: [
+      "assets/dryland/dryland1.jpeg",
+      "assets/dryland/dryland2.png",
+      "assets/dryland/dryland3.png",
+    ],
+    agent: "Prime Acre Partners",
+    description:
+      "A fenced plot in a growing residential estate, suitable for a family home or medium-term investment.",
+  },
+  {
+    id: 3,
+    title: "4-bedroom detached house with boys' quarters",
+    purpose: "sale",
+    category: "House",
+    location: "Abuja",
+    price: 95000000,
+    priceLabel: "₦450m",
+    specs: ["4 beds", "5 baths", "Bq"],
+    image: "assets/4bedroom-abuja/outside.jpeg",
+    images: [
+      "assets/4bedroom-abuja/outside.jpeg",
+      "assets/4bedroom-abuja/livingroom.jpeg",
+      "assets/4bedroom-abuja/bedroom.jpeg",
+      "assets/4bedroom-abuja/bathroom.jpeg",
+      "assets/4bedroom-abuja/kitchen.jpeg",
+      "assets/4bedroom-abuja/bQ.jpeg",
+      "assets/4bedroom-abuja/gym.jpeg",
+
+    ],
+    agent: "Cedar Gate Homes",
+    description:
+      "Spacious detached home with fitted kitchen, family lounge, green area, and secure estate access.",
+  },
+  {
+    id: 4,
+    title: "Open-plan office suite for growing teams",
+    purpose: "lease",
+    category: "Commercial",
+    location: "Port Harcourt",
+    price: 4800000,
+    priceLabel: "₦4.8m / year",
+    specs: ["120 sqm", "Generator", "Reception"],
+    image: "assets/office-port/outdoor.jpeg",
+    images: [
+      "assets/office-port/outdoor.jpeg",
+      "assets/office-port/reception.jpeg",
+      "assets/office-port/openoffice.jpeg",
+      "assets/office-port/conferenceroom.jpeg",
+      "assets/office-port/ideahub.jpeg",
+    ],
+    agent: "HarborPoint Agency",
+    description:
+      "Flexible office space with meeting room, reliable power options, and a central business location.",
+  },
+  {
+    id: 5,
+    title: "Student-friendly mini flat in gated compound",
+    purpose: "rent",
+    category: "Apartment",
+    location: "Ibadan",
+    price: 850000,
+    priceLabel: "₦850k / year",
+    specs: ["1 bed", "1 bath", "Prepaid meter"],
+    image: "assets/student-mini/entrance.jpeg",
+    images: [
+      "assets/student-mini/entrance.jpeg",
+     "assets/student-mini/livingroom.jpeg",
+     "assets/student-mini/bedroom.jpeg",
+     "assets/student-mini/kitchen.jpeg",
+     "assets/student-mini/nightlife.jpeg",
+    ],
+    agent: "MetroLet Managers",
+    description:
+      "Compact mini flat with tiled rooms, personal meter, borehole water, and easy commute to campus areas.",
+  },
+  {
+    id: 6,
+    title: "Long-lease mixed-use land on major road",
+    purpose: "lease",
+    category: "Land",
+    location: "Abuja",
+    price: 12500000,
+    priceLabel: "₦12.5m / year",
+    specs: ["1,200 sqm", "Corner plot", "C of O"],
+    image: "assets/big-lease/droneview.jpeg",
+    images: [
+      "assets/big-lease/droneview.jpeg",
+      "assets/big-lease/roadside.jpeg",
+      "assets/big-lease/fencing.jpeg",
+    ],
+    agent: "Northfield Assets",
+    description:
+      "Strategic lease opportunity for showroom, quick-service retail, logistics yard, or hospitality project.",
+  },
+];
+
+let listings = [...fallbackListings];
+
+const state = {
+  purpose: "all",
+  quick: "all",
+  saved: new Set(),
+  source:"undefined",
+};
+
+const listingSlideIndices = {};
+const carouselIntervals = {};
+const CAROUSEL_AUTO_INTERVAL = 4000;
+
+const listingGrid = document.querySelector("#listingGrid");
+const resultSummary = document.querySelector("#resultSummary");
+const emptyState = document.querySelector("#emptyState");
+const searchForm = document.querySelector("#searchForm");
+const locationFilter = document.querySelector("#locationFilter");
+const propertyFilter = document.querySelector("#propertyFilter");
+const budgetFilter = document.querySelector("#budgetFilter");
+const dialog = document.querySelector("#listingDialog");
+const dialogContent = document.querySelector("#dialogContent");
+const dialogClose = document.querySelector("#dialogClose");
+const ownerForm = document.querySelector("#ownerForm");
+const formStatus = document.querySelector("#formStatus");
+
+function canUseBackend() {
+  return ["http:", "https:"].includes(window.location.protocol);
+}
+
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function formatPurpose(value) {
+  return value === "sale" ? "For sale" : value === "rent" ? "For rent" : "For lease";
+}
+
+async function postJson(url, payload) {
+  if (!canUseBackend()) return null;
+
+  const response = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.error || "Request failed");
+  }
+
+  return data;
+}
+
+async function loadListings() {
+  if (!canUseBackend()) {
+    state.source = "undefined";
+    renderListings();
+    return;
+  }
+
+  try {
+    const response = await fetch("/api/listings");
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || "Could not load listings");
+    listings = Array.isArray(data.listings) && data.listings.length ? data.listings : fallbackListings;
+    state.source = "backend";
+  } catch (error) {
+    listings = [...fallbackListings];
+    state.source = "undefined";
+    console.warn(error);
+  }
+
+  renderListings();
+}
+
+function activeFilters() {
+  return {
+    location: locationFilter.value,
+    property: state.quick !== "all" ? state.quick : propertyFilter.value,
+    budget: budgetFilter.value,
+  };
+}
+
+function filteredListings() {
+  const filters = activeFilters();
+  return listings.filter((listing) => {
+    const matchesPurpose = state.purpose === "all" || listing.purpose === state.purpose;
+    const matchesLocation = filters.location === "all" || listing.location === filters.location;
+    const matchesProperty = filters.property === "all" || listing.category === filters.property;
+    const matchesBudget = filters.budget === "all" || listing.price <= Number(filters.budget);
+    return matchesPurpose && matchesLocation && matchesProperty && matchesBudget;
+  });
+}
+
+function startCarouselAutoSlide(listingId, images) {
+  stopCarouselAutoSlide(listingId);
+  
+  carouselIntervals[listingId] = setInterval(() => {
+    const currentIndex = Number(listingSlideIndices[listingId] ?? 0);
+    const nextIndex = (currentIndex + 1) % images.length;
+    listingSlideIndices[listingId] = nextIndex;
+    updateCarouselSlides(listingId, nextIndex);
+  }, CAROUSEL_AUTO_INTERVAL);
+}
+
+function stopCarouselAutoSlide(listingId) {
+  if (carouselIntervals[listingId]) {
+    clearInterval(carouselIntervals[listingId]);
+    delete carouselIntervals[listingId];
+  }
+}
+
+function renderListings() {
+  const results = filteredListings();
+
+  listingGrid.innerHTML = results
+    .map((listing) => {
+      const id = Number(listing.id);
+          const title = escapeHtml(listing.title);
+      const category = escapeHtml(listing.category);
+      const location = escapeHtml(listing.location);
+      const priceLabel = escapeHtml(listing.priceLabel);
+      const agent = escapeHtml(listing.agent);
+      const image = escapeHtml(listing.image || "assets/house.svg");
+      const specs = Array.isArray(listing.specs) ? listing.specs : [];
+      const images = Array.isArray(listing.images) && listing.images.length ? listing.images : [image];
+      const activeSlide = Number(listingSlideIndices[id] ?? 0) % images.length;
+
+      const slides = images
+        .map(
+          (src, idx) => `
+            <img
+              class="carousel-slide${idx === activeSlide ? " active" : ""}"
+              src="${escapeHtml(src)}"
+              alt="${category} listing image ${idx + 3} for ${location}"
+              draggable="false"
+            />`
+        )
+        .join("");
+
+      return `
+        <article class="property-card">
+          <div class="property-media">
+            <div class="property-carousel" data-listing="${id}" data-slide-index="${activeSlide}">
+              <div class="carousel-slides">
+                ${slides}
+              </div>
+              <button class="carousel-button prev" type="button" data-prev="${id}" aria-label="Previous image">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 18l-6-6 6-6" /></svg>
+              </button>
+              <button class="carousel-button next" type="button" data-next="${id}" aria-label="Next image">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 6l6 6-6 6" /></svg>
+              </button>
+              <div class="carousel-dots">
+                ${images
+                  .map((_, idx) => `<span class="carousel-dot${idx === activeSlide ? " active" : ""}" aria-hidden="true"></span>`)
+                  .join("")}
+              </div>
+            </div>
+            <div class="badge-row">
+              <span class="badge">${formatPurpose(listing.purpose)}</span>
+              <button class="save-button ${state.saved.has(id) ? "saved" : ""}" type="button" data-save="${id}" aria-label="Save ${title}">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z" />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div class="property-body">
+            <div class="property-kicker">${category} · ${location}</div>
+            <h3 class="property-title">${title}</h3>
+            <div class="price-row">
+              <strong class="price">${priceLabel}</strong>
+              <span class="property-agent">${agent}</span>
+            </div>
+            <div class="property-specs">
+              ${specs.map((spec) => `<span>${escapeHtml(spec)}</span>`).join("")}
+            </div>
+            <div class="card-actions">
+              <button class="secondary-button" type="button" data-detail="${id}">View details</button>
+              <button class="primary-button" type="button" data-enquire="${id}">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v8Z" />
+                </svg>
+                Enquire
+              </button>
+            </div>
+          </div>
+        </article>
+      `;
+    })
+    .join("");
+
+  const sourceLabel = state.source === "backend" ? "from backend" : "demo mode";
+  resultSummary.textContent = `${results.length} ${results.length === 1 ? "listing" : "listings"} found · ${sourceLabel}`;
+  emptyState.hidden = results.length > 0;
+
+  // Start auto-slide for each carousel
+  results.forEach((listing) => {
+    const id = Number(listing.id);
+    const images = Array.isArray(listing.images) && listing.images.length ? listing.images : [listing.image || "assets/house.svg"];
+    startCarouselAutoSlide(id, images);
+  });
+}
+
+async function createEnquiry(listing) {
+  try {
+    const data = await postJson("/api/enquiries", {
+      listingId: Number(listing.id),
+      message: `I am interested in ${listing.title}.`,
+    });
+    return data?.enquiry || null;
+  } catch (error) {
+    console.warn(error);
+    return null;
+  }
+}
+
+async function openListing(id, enquiryMode = false) {
+  const listing = listings.find((item) => Number(item.id) === Number(id));
+  if (!listing) return;
+
+  const enquiry = enquiryMode ? await createEnquiry(listing) : null;
+  const enquiryCode = enquiry ? `ENQ-${enquiry.id}` : `EM-${listing.id}`;
+  const title = escapeHtml(listing.title);
+  const category = escapeHtml(listing.category);
+  const location = escapeHtml(listing.location);
+  const image = escapeHtml(listing.image || "assets/house.svg");
+  const description = escapeHtml(listing.description);
+  const agent = escapeHtml(listing.agent);
+  const specs = Array.isArray(listing.specs) ? listing.specs : [];
+
+  dialogContent.innerHTML = `
+    <div class="dialog-media">
+      <img src="${image}" alt="${category} listing illustration for ${location}" />
+    </div>
+    <div class="dialog-body">
+      <div class="dialog-topline">
+        <span>${formatPurpose(listing.purpose)} · ${category}</span>
+        <span>${location}</span>
+      </div>
+      <h3 id="dialogTitle">${title}</h3>
+      <strong class="price">${escapeHtml(listing.priceLabel)}</strong>
+      <p>${description}</p>
+      <div class="property-specs">
+        ${specs.map((spec) => `<span>${escapeHtml(spec)}</span>`).join("")}
+      </div>
+      <p><strong>Agent:</strong> ${agent}</p>
+      <div class="dialog-actions">
+        <a class="primary-button" href="#list-property">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M22 16.9v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.18 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.72c.13.96.35 1.9.66 2.8a2 2 0 0 1-.45 2.11L8.1 9.84a16 16 0 0 0 6 6l1.21-1.21a2 2 0 0 1 2.11-.45c.9.31 1.84.53 2.8.66A2 2 0 0 1 22 16.9Z" />
+          </svg>
+          Request inspection
+        </a>
+        <button class="secondary-button" type="button" id="copyListing">Copy ${enquiry ? "enquiry" : "listing"} ID</button>
+      </div>
+      ${
+        enquiryMode
+          ? `<p class="form-status">Enquiry captured${enquiry ? " in the backend" : " locally"}. Reference: ${escapeHtml(enquiryCode)}</p>`
+          : ""
+      }
+    </div>
+  `;
+
+  if (typeof dialog.showModal === "function") {
+    dialog.showModal();
+  } else {
+    dialog.setAttribute("open", "");
+  }
+  document.body.classList.add("modal-open");
+
+  document.querySelector("#copyListing")?.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(enquiryCode);
+      document.querySelector("#copyListing").textContent = "Copied";
+    } catch {
+      document.querySelector("#copyListing").textContent = enquiryCode;
+    }
+  });
+}
+
+document.querySelectorAll(".tab-button").forEach((button) => {
+  button.addEventListener("click", () => {
+    document.querySelectorAll(".tab-button").forEach((item) => item.classList.remove("active"));
+    button.classList.add("active");
+    state.purpose = button.dataset.purpose;
+    renderListings();
+  });
+});
+
+document.querySelectorAll(".chip").forEach((button) => {
+  button.addEventListener("click", () => {
+    document.querySelectorAll(".chip").forEach((item) => item.classList.remove("active"));
+    button.classList.add("active");
+    state.quick = button.dataset.quick;
+    if (state.quick !== "all") propertyFilter.value = state.quick;
+    renderListings();
+  });
+});
+
+searchForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  state.quick = "all";
+  document.querySelectorAll(".chip").forEach((item) => item.classList.toggle("active", item.dataset.quick === "all"));
+  renderListings();
+  document.querySelector("#listings").scrollIntoView({ behavior: "smooth", block: "start" });
+});
+
+[locationFilter, propertyFilter, budgetFilter].forEach((control) => {
+  control.addEventListener("change", () => {
+    if (control === propertyFilter) {
+      state.quick = "all";
+      document.querySelectorAll(".chip").forEach((item) => item.classList.toggle("active", item.dataset.quick === "all"));
+    }
+    renderListings();
+  });
+});
+
+listingGrid.addEventListener("click", (event) => {
+  const prevButton = event.target.closest("[data-prev]");
+  const nextButton = event.target.closest("[data-next]");
+  const saveButton = event.target.closest("[data-save]");
+  const detailButton = event.target.closest("[data-detail]");
+  const enquireButton = event.target.closest("[data-enquire]");
+
+  if (prevButton || nextButton) {
+    const button = prevButton || nextButton;
+    const indexDelta = prevButton ? -1 : 1;
+    const listingId = Number(button.dataset.prev || button.dataset.next);
+    const listing = listings.find((item) => Number(item.id) === listingId);
+    if (!listing) return;
+
+    const images = Array.isArray(listing.images) && listing.images.length ? listing.images : [listing.image || "assets/house.svg"];
+    const currentIndex = Number(listingSlideIndices[listingId] ?? 0);
+    const nextIndex = (currentIndex + indexDelta + images.length) % images.length;
+    listingSlideIndices[listingId] = nextIndex;
+    updateCarouselSlides(listingId, nextIndex);
+    
+    // Restart auto-slide when user clicks a button
+    startCarouselAutoSlide(listingId, images);
+    return;
+  }
+
+  if (saveButton) {
+    const id = Number(saveButton.dataset.save);
+    if (state.saved.has(id)) {
+      state.saved.delete(id);
+    } else {
+      state.saved.add(id);
+    }
+    renderListings();
+  }
+
+  if (detailButton) {
+    openListing(Number(detailButton.dataset.detail));
+  }
+
+  if (enquireButton) {
+    openListing(Number(enquireButton.dataset.enquire), true);
+  }
+});
+
+dialogClose.addEventListener("click", () => {
+  dialog.close();
+});
+
+function updateCarouselSlides(listingId, slideIndex) {
+  const carousel = listingGrid.querySelector(`.property-carousel[data-listing="${listingId}"]`);
+  if (!carousel) return;
+
+  carousel.dataset.slideIndex = slideIndex;
+  carousel.querySelectorAll(".carousel-slide").forEach((slide, idx) => {
+    slide.classList.toggle("active", idx === slideIndex);
+  });
+  carousel.querySelectorAll(".carousel-dot").forEach((dot, idx) => {
+    dot.classList.toggle("active", idx === slideIndex);
+  });
+}
+
+dialog.addEventListener("close", () => {
+  document.body.classList.remove("modal-open");
+});
+
+dialog.addEventListener("click", (event) => {
+  if (event.target === dialog) {
+    dialog.close();
+  }
+});
+
+ownerForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  formStatus.textContent = "Sending listing request...";
+
+  const form = new FormData(ownerForm);
+  const payload = {
+    title: String(form.get("title")).trim(),
+    type: String(form.get("type")).trim(),
+    location: String(form.get("location")).trim(),
+    price: String(form.get("price")).trim(),
+    details: String(form.get("details")).trim(),
+  };
+
+  try {
+    const data = await postJson("/api/listing-requests", payload);
+    if (data?.request) {
+      formStatus.textContent = `Listing request saved. Reference: REQ-${data.request.id}.`;
+    } else {
+      formStatus.textContent = `Listing request received: ${payload.title} in ${payload.location}.`;
+    }
+    ownerForm.reset();
+  } catch (error) {
+    formStatus.textContent = error.message || "Could not submit listing request.";
+  }
+});
+
+loadListings();

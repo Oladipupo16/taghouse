@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 450" role="img" aria-label="Mixed use land lease">
+  <rect width="720" height="450" fill="#eef4f0"/>
+  <path d="M0 278c90-38 170-44 240-18 126 46 256 42 480-50v240H0z" fill="#dff1e8"/>
+  <path d="M92 362 242 158l390 130-194 96z" fill="#136b4c"/>
+  <path d="M156 342 260 208l270 88-126 60z" fill="#d99f31"/>
+  <path d="M92 362 242 158l390 130M242 158l196 226M156 342l474-54" stroke="#fffdf8" stroke-width="8" stroke-linecap="round" opacity=".86"/>
+  <rect x="86" y="90" width="184" height="70" rx="7" fill="#ffffff"/>
+  <path d="M112 118h92M112 140h56" stroke="#18201d" stroke-width="10" stroke-linecap="round"/>
+  <path d="M314 114h82v106h-82z" fill="#fffdf8"/>
+  <path d="M296 122h118l-59-46z" fill="#c85d3d"/>
+  <rect x="340" y="174" width="32" height="46" fill="#136b4c"/>
+</svg>

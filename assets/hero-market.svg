@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 640" role="img" aria-labelledby="title desc">
+  <title id="title">Housing and land marketplace illustration</title>
+  <desc id="desc">A modern apartment building, land plot, and listing cards for a property marketplace.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#fff7e8"/>
+      <stop offset="1" stop-color="#dff1e8"/>
+    </linearGradient>
+    <linearGradient id="ground" x1="0" x2="1">
+      <stop offset="0" stop-color="#136b4c"/>
+      <stop offset="1" stop-color="#d99f31"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="24" stdDeviation="24" flood-color="#18201d" flood-opacity=".18"/>
+    </filter>
+  </defs>
+  <rect width="760" height="640" rx="34" fill="url(#sky)"/>
+  <path d="M68 520c78-48 165-72 261-72 152 0 218 62 361 16v118H68Z" fill="#f1e5d2"/>
+  <path d="M70 522c120-46 212-42 314-10 104 34 185 20 306-28v92H70Z" fill="url(#ground)" opacity=".9"/>
+  <g filter="url(#shadow)">
+    <path d="M178 148h238v348H178z" fill="#fffdf8"/>
+    <path d="M204 108h238v388H204z" fill="#ffffff"/>
+    <path d="M238 108h48v388h-48z" fill="#eef4f0"/>
+    <path d="M334 108h48v388h-48z" fill="#eef4f0"/>
+    <path d="M204 108 316 50l126 58Z" fill="#c85d3d"/>
+    <path d="M176 148h28v348h-28z" fill="#dfddd2"/>
+    <path d="M442 148h40v348h-40z" fill="#d6d1c3"/>
+    <g fill="#136b4c" opacity=".95">
+      <rect x="232" y="148" width="34" height="42" rx="4"/>
+      <rect x="300" y="148" width="34" height="42" rx="4"/>
+      <rect x="368" y="148" width="34" height="42" rx="4"/>
+      <rect x="232" y="224" width="34" height="42" rx="4"/>
+      <rect x="300" y="224" width="34" height="42" rx="4"/>
+      <rect x="368" y="224" width="34" height="42" rx="4"/>
+      <rect x="232" y="300" width="34" height="42" rx="4"/>
+      <rect x="300" y="300" width="34" height="42" rx="4"/>
+      <rect x="368" y="300" width="34" height="42" rx="4"/>
+    </g>
+    <path d="M284 402h76v94h-76z" fill="#d99f31"/>
+    <path d="M302 420h40v76h-40z" fill="#fff7e8"/>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="462" y="114" width="210" height="148" rx="8" fill="#ffffff"/>
+    <rect x="482" y="134" width="76" height="62" rx="6" fill="#dff1e8"/>
+    <path d="M496 184h48l-16-28-11 18-7-10Z" fill="#136b4c"/>
+    <rect x="578" y="138" width="70" height="12" rx="6" fill="#18201d"/>
+    <rect x="578" y="164" width="50" height="10" rx="5" fill="#d99f31"/>
+    <rect x="578" y="194" width="74" height="14" rx="7" fill="#dfddd2"/>
+    <rect x="578" y="222" width="52" height="18" rx="9" fill="#136b4c"/>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="468" y="310" width="216" height="164" rx="8" fill="#fffdf8"/>
+    <path d="M498 420 548 334l42 86 22-45 42 45Z" fill="#dff1e8"/>
+    <path d="M508 420 548 352l34 68Z" fill="#136b4c"/>
+    <path d="M590 420 613 376l37 44Z" fill="#d99f31"/>
+    <rect x="500" y="442" width="82" height="12" rx="6" fill="#18201d"/>
+    <rect x="594" y="442" width="58" height="12" rx="6" fill="#c85d3d"/>
+  </g>
+  <g>
+    <circle cx="112" cy="426" r="42" fill="#136b4c"/>
+    <path d="M112 390v118M72 464c28-28 52-42 80-44M83 414c30 23 56 42 88 50" stroke="#fffdf8" stroke-width="8" stroke-linecap="round" fill="none"/>
+  </g>
+</svg>

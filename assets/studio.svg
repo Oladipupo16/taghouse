@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 450" role="img" aria-label="Mini flat apartment">
+  <rect width="720" height="450" fill="#fffaf0"/>
+  <path d="M0 330c126-68 246-72 360-12 104 54 216 52 360-18v150H0z" fill="#dff1e8"/>
+  <rect x="150" y="124" width="420" height="242" rx="8" fill="#ffffff"/>
+  <path d="M126 134h468L360 58z" fill="#136b4c"/>
+  <rect x="196" y="184" width="92" height="72" rx="6" fill="#d99f31"/>
+  <rect x="432" y="184" width="92" height="72" rx="6" fill="#d99f31"/>
+  <rect x="318" y="250" width="84" height="116" fill="#c85d3d"/>
+  <path d="M174 366h392" stroke="#18201d" stroke-width="10" stroke-linecap="round" opacity=".18"/>
+</svg>

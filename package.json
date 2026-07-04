@@ -1,0 +1,27 @@
+{
+  "name": "taghouse",
+  "version": "1.0.0",
+  "description": "Nigeria's #1 real estate marketplace - Buy, Sell, Rent, and Lease Property",
+  "private": false,
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "check": "node --check server.js && node --check app.js && node --check api/listings.js && node --check api/listing-requests.js && node --check api/enquiries.js",
+    "build": "npm run check"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "real estate",
+    "property",
+    "marketplace",
+    "Nigeria",
+    "buy",
+    "sell",
+    "rent",
+    "lease"
+  ],
+  "author": "Oladipupo16",
+  "license": "MIT"
+}

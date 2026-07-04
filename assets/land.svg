@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 450" role="img" aria-label="Residential land plot">
+  <rect width="720" height="450" fill="#fff7e8"/>
+  <path d="M0 262c98-48 198-74 300-74 150 0 252 76 420 30v232H0z" fill="#dff1e8"/>
+  <path d="M86 348 314 168l276 182c-80 42-174 64-282 64-84 0-158-20-222-66Z" fill="#136b4c"/>
+  <path d="M164 338 322 220l188 122c-54 26-116 38-186 38-60 0-114-14-160-42Z" fill="#d99f31"/>
+  <path d="M92 348h500M314 168l8 212M186 268l344 44" stroke="#fffdf8" stroke-width="8" stroke-linecap="round" opacity=".85"/>
+  <g fill="#18201d">
+    <circle cx="314" cy="168" r="10"/>
+    <circle cx="86" cy="348" r="10"/>
+    <circle cx="590" cy="350" r="10"/>
+    <circle cx="322" cy="380" r="10"/>
+  </g>
+  <rect x="480" y="90" width="112" height="66" rx="6" fill="#ffffff"/>
+  <path d="M500 136h72M500 112h52" stroke="#136b4c" stroke-width="10" stroke-linecap="round"/>
+</svg>
