@@ -132,7 +132,7 @@ const fallbackListings = [
 // e.g. "https://fastapi-dm5v.onrender.com"
 const API_BASE = window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost"
   ? "http://127.0.0.1:8000"
-  : "https://fastapi-dm5v.onrender.com";
+  : "https://taghouse.onrender.com";
 
 // Normalize FastAPI snake_case fields to match what the frontend expects
 function normalizeListing(listing) {

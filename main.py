@@ -266,4 +266,7 @@ def serve_css():
 @app.get("/app.js")
 def serve_js():
     return FileResponse("app.js", media_type="application/javascript")
+@app.get("/styles.css")
+def serve_css():
+    return FileResponse("styles.css", media_type="text/css")
     
