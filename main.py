@@ -248,8 +248,18 @@ def health(db: Session = Depends(get_db)):
     }
 
 # ── Serve Frontend ────────────────────────────────────────────────
+# ── Serve Frontend ────────────────────────────────────────────────
+# ── Serve Frontend ────────────────────────────────────────────────
 
 app.mount("/assets", StaticFiles(directory="assets"), name="assets")
+
+@app.get("/styles.css")
+def serve_css():
+    return FileResponse("styles.css", media_type="text/css")
+
+@app.get("/app.js")
+def serve_js():
+    return FileResponse("app.js", media_type="application/javascript")
 
 @app.get("/", response_class=FileResponse)
 def serve_index():
@@ -258,15 +268,5 @@ def serve_index():
 @app.get("/{page}.html", response_class=FileResponse)
 def serve_page(page: str):
     return FileResponse(f"{page}.html")
-@app.get("/app.js")
 
-def serve_css():
-    return FileResponse("styles.css", media_type="text/css")
-
-@app.get("/app.js")
-def serve_js():
-    return FileResponse("app.js", media_type="application/javascript")
-@app.get("/styles.css")
-def serve_css():
-    return FileResponse("styles.css", media_type="text/css")
     
