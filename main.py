@@ -248,8 +248,7 @@ def health(db: Session = Depends(get_db)):
     }
 
 # ── Serve Frontend ────────────────────────────────────────────────
-# ── Serve Frontend ────────────────────────────────────────────────
-# ── Serve Frontend ────────────────────────────────────────────────
+
 
 app.mount("/assets", StaticFiles(directory="assets"), name="assets")
 

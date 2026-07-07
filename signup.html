@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sign Up | TagHouse</title>
+    <meta name="description" content="Create your free TagHouse account to buy, sell, rent and lease property across Nigeria." />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      .auth-wrap {
+        min-height: calc(100vh - 73px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px clamp(16px, 4vw, 56px);
+      }
+      .auth-card {
+        width: 100%;
+        max-width: 880px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        border-radius: 16px;
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        background: var(--surface);
+      }
+      .auth-panel {
+        background: var(--green);
+        padding: 52px 44px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .auth-panel::before {
+        content: "";
+        position: absolute;
+        width: 320px; height: 320px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.06);
+        top: -100px; right: -80px;
+      }
+      .auth-panel::after {
+        content: "";
+        position: absolute;
+        width: 220px; height: 220px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.06);
+        bottom: -70px; left: -60px;
+      }
+      .auth-panel-title {
+        color: #fff;
+        font-size: 1.75rem;
+        font-weight: 800;
+        line-height: 1.25;
+        margin: 0 0 12px;
+        position: relative;
+        z-index: 1;
+      }
+      .auth-panel-desc {
+        color: rgba(255,255,255,0.72);
+        font-size: 0.93rem;
+        line-height: 1.6;
+        margin: 0 0 28px;
+        position: relative;
+        z-index: 1;
+      }
+      .auth-stats-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        position: relative;
+        z-index: 1;
+      }
+      .auth-stat {
+        background: rgba(255,255,255,0.1);
+        border-radius: 10px;
+        padding: 14px;
+      }
+      .auth-stat strong {
+        display: block;
+        color: var(--gold);
+        font-size: 1.4rem;
+        font-weight: 800;
+      }
+      .auth-stat span {
+        color: rgba(255,255,255,0.78);
+        font-size: 0.82rem;
+      }
+      .auth-form-side {
+        padding: 44px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        overflow-y: auto;
+      }
+      .auth-title {
+        font-size: 1.45rem;
+        font-weight: 800;
+        color: var(--ink);
+        margin: 0 0 6px;
+      }
+      .auth-subtitle {
+        color: var(--muted);
+        font-size: 0.9rem;
+        margin: 0 0 20px;
+      }
+      .acct-type-label {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--ink);
+        display: block;
+        margin-bottom: 8px;
+      }
+      .acct-type-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 8px;
+        margin-bottom: 20px;
+      }
+      .acct-type-btn {
+        border: 1.5px solid var(--line);
+        border-radius: var(--radius);
+        padding: 10px 6px;
+        text-align: center;
+        cursor: pointer;
+        background: var(--paper);
+        font-family: inherit;
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: var(--ink);
+        transition: all 0.2s;
+      }
+      .acct-type-btn .ti {
+        font-size: 1.2rem;
+        display: block;
+        margin-bottom: 4px;
+      }
+      .acct-type-btn.active {
+        border-color: var(--green);
+        background: var(--green-soft);
+        color: var(--green);
+        font-weight: 700;
+      }
+      .auth-status {
+        padding: 10px 14px;
+        border-radius: var(--radius);
+        font-size: 0.88rem;
+        display: none;
+        margin-bottom: 14px;
+      }
+      .auth-status.error {
+        background: #fef2f2;
+        color: var(--coral);
+        border: 1px solid #fecaca;
+        display: block;
+      }
+      .auth-status.success {
+        background: var(--green-soft);
+        color: var(--green);
+        border: 1px solid #a7d7c3;
+        display: block;
+      }
+      .auth-form {
+        display: flex;
+        flex-direction: column;
+        gap: 13px;
+      }
+      .auth-field label {
+        display: block;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--ink);
+        margin-bottom: 6px;
+      }
+      .auth-field input {
+        width: 100%;
+        padding: 11px 14px;
+        border: 1.5px solid var(--line);
+        border-radius: var(--radius);
+        font-size: 0.95rem;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: inherit;
+        outline: none;
+        transition: border-color 0.2s, background 0.2s;
+      }
+      .auth-field input:focus {
+        border-color: var(--green);
+        background: #fff;
+      }
+      .field-error {
+        color: var(--coral);
+        font-size: 0.8rem;
+        margin-top: 4px;
+        display: none;
+      }
+      .field-error.visible { display: block; }
+      .pw-strength {
+        height: 3px;
+        border-radius: 2px;
+        background: var(--line);
+        margin-top: 6px;
+        overflow: hidden;
+      }
+      .pw-bar {
+        height: 100%;
+        border-radius: 2px;
+        width: 0%;
+        transition: width 0.3s, background 0.3s;
+      }
+      .auth-terms {
+        font-size: 0.8rem;
+        color: var(--muted);
+        text-align: center;
+        line-height: 1.5;
+        margin: 0;
+      }
+      .auth-terms a { color: var(--green); font-weight: 500; }
+      .auth-switch {
+        text-align: center;
+        margin-top: 16px;
+        color: var(--muted);
+        font-size: 0.875rem;
+      }
+      .auth-switch a { color: var(--green); font-weight: 700; }
+      @media (max-width: 700px) {
+        .auth-card { grid-template-columns: 1fr; }
+        .auth-panel { display: none; }
+        .auth-form-side { padding: 32px 20px; }
+        .auth-wrap { padding: 24px 16px; align-items: flex-start; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="TagHouse home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" role="img">
+            <path d="M3 11.2 12 4l9 7.2v8.1a1.7 1.7 0 0 1-1.7 1.7h-4.4v-6.2H9.1V21H4.7A1.7 1.7 0 0 1 3 19.3v-8.1Z" />
+            <path d="M9 21v-6.2h6V21" />
+          </svg>
+        </span>
+        <span>TagHouse</span>
+      </a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="buyer.html">Find Property</a>
+        <a href="owner.html">List Property</a>
+        <a href="agents.html">Agents</a>
+        <a href="about.html">About</a>
+      </nav>
+      <a class="header-action" href="login.html">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>
+        Login
+      </a>
+    </header>
+
+    <main class="auth-wrap">
+      <div class="auth-card">
+        <div class="auth-panel">
+          <h2 class="auth-panel-title">Join Nigeria's #1 Property Marketplace</h2>
+          <p class="auth-panel-desc">Free to join. Connect with thousands of buyers, sellers, and verified agents across 18 cities.</p>
+          <div class="auth-stats-grid">
+            <div class="auth-stat"><strong>1,240+</strong><span>Active Listings</span></div>
+            <div class="auth-stat"><strong>320+</strong><span>Verified Agents</span></div>
+            <div class="auth-stat"><strong>50K+</strong><span>Happy Users</span></div>
+            <div class="auth-stat"><strong>18</strong><span>Cities Covered</span></div>
+          </div>
+        </div>
+
+        <div class="auth-form-side">
+          <h3 class="auth-title">Create your free account</h3>
+          <p class="auth-subtitle">No credit card required</p>
+          <div class="auth-status" id="authStatus"></div>
+
+          <span class="acct-type-label">I am a:</span>
+          <div class="acct-type-grid">
+            <button class="acct-type-btn active" data-type="buyer" type="button"><span class="ti">🔍</span>Buyer/Renter</button>
+            <button class="acct-type-btn" data-type="owner" type="button"><span class="ti">🏠</span>Property Owner</button>
+            <button class="acct-type-btn" data-type="agent" type="button"><span class="ti">🤝</span>Agent</button>
+          </div>
+
+          <form class="auth-form" id="signupForm">
+            <div class="auth-field">
+              <label for="fullName">Full name</label>
+              <input type="text" id="fullName" placeholder="Your full name" required />
+            </div>
+            <div class="auth-field">
+              <label for="email">Email address</label>
+              <input type="email" id="email" placeholder="your@email.com" required />
+            </div>
+            <div class="auth-field">
+              <label for="phone">Phone number</label>
+              <input type="tel" id="phone" placeholder="+234 800 000 0000" />
+            </div>
+            <div class="auth-field">
+              <label for="password">Password</label>
+              <input type="password" id="password" placeholder="Min. 8 characters" required />
+              <div class="pw-strength"><div class="pw-bar" id="pwBar"></div></div>
+            </div>
+            <div class="auth-field">
+              <label for="confirmPw">Confirm password</label>
+              <input type="password" id="confirmPw" placeholder="Repeat your password" required />
+              <span class="field-error" id="confirmErr">Passwords do not match</span>
+            </div>
+            <p class="auth-terms">
+              By signing up you agree to our <a href="terms-of-service.html">Terms of Service</a> and <a href="privacy-policy.html">Privacy Policy</a>
+            </p>
+            <button class="primary-button" type="submit" id="submitBtn" style="width:100%;justify-content:center;">
+              Create Free Account
+            </button>
+          </form>
+          <div class="auth-switch">Already have an account? <a href="login.html">Login</a></div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <a class="brand footer-brand" href="index.html">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" role="img">
+              <path d="M3 11.2 12 4l9 7.2v8.1a1.7 1.7 0 0 1-1.7 1.7h-4.4v-6.2H9.1V21H4.7A1.7 1.7 0 0 1 3 19.3v-8.1Z" />
+              <path d="M9 21v-6.2h6V21" />
+            </svg>
+          </span>
+          <span>TagHouse</span>
+        </a>
+        <p>Nigeria's most trusted real estate marketplace.</p>
+      </div>
+      <div class="footer-section">
+        <h5>Quick Links</h5>
+        <div class="footer-links">
+          <a href="buyer.html">Find Property</a>
+          <a href="owner.html">List Property</a>
+          <a href="agents.html">Find Agents</a>
+          <a href="contact.html">Contact Us</a>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h5>Company</h5>
+        <div class="footer-links">
+          <a href="about.html">About Us</a>
+          <a href="blog.html">Blog & Insights</a>
+          <a href="careers.html">Careers</a>
+          <a href="faq.html">FAQ</a>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h5>Support</h5>
+        <div class="footer-links">
+          <a href="faq.html">FAQ</a>
+          <a href="contact.html">Contact Us</a>
+          <a href="privacy-policy.html">Privacy</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 TagHouse. All rights reserved.</span>
+        <div class="footer-legal">
+          <a href="privacy-policy.html">Privacy Policy</a>
+          <a href="terms-of-service.html">Terms of Service</a>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      const API_BASE = window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost"
+        ? "http://127.0.0.1:8000" : "https://taghouse.onrender.com";
+
+      let selectedType = "buyer";
+      document.querySelectorAll(".acct-type-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll(".acct-type-btn").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          selectedType = btn.dataset.type;
+        });
+      });
+
+      document.getElementById("password").addEventListener("input", e => {
+        const v = e.target.value, bar = document.getElementById("pwBar");
+        let s = 0;
+        if (v.length >= 8) s++;
+        if (/[A-Z]/.test(v)) s++;
+        if (/[0-9]/.test(v)) s++;
+        if (/[^A-Za-z0-9]/.test(v)) s++;
+        bar.style.width = s > 0 ? ["25%","50%","75%","100%"][s-1] : "0%";
+        bar.style.background = s > 0 ? ["#ef4444","#f97316","#eab308","#22c55e"][s-1] : "transparent";
+      });
+
+      document.getElementById("signupForm").addEventListener("submit", async e => {
+        e.preventDefault();
+        const fullName = document.getElementById("fullName").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+        const confirmPw = document.getElementById("confirmPw").value;
+        const confirmErr = document.getElementById("confirmErr");
+        const status = document.getElementById("authStatus");
+        const btn = document.getElementById("submitBtn");
+
+        if (password !== confirmPw) { confirmErr.classList.add("visible"); return; }
+        confirmErr.classList.remove("visible");
+        if (password.length < 8) {
+          status.className = "auth-status error";
+          status.textContent = "❌ Password must be at least 8 characters"; return;
+        }
+
+        btn.disabled = true; btn.textContent = "Creating account...";
+        status.className = "auth-status";
+
+        try {
+          const res = await fetch(`${API_BASE}/auth/signup`, {
+            method: "POST", headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password, full_name: fullName }),
+          });
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.detail || "Signup failed");
+
+          const loginRes = await fetch(`${API_BASE}/auth/login`, {
+            method: "POST", headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password }),
+          });
+          const loginData = await loginRes.json();
+          if (loginRes.ok) {
+            localStorage.setItem("taghouse_token", loginData.access_token);
+            localStorage.setItem("taghouse_email", email);
+            localStorage.setItem("taghouse_name", fullName);
+            localStorage.setItem("taghouse_type", selectedType);
+          }
+
+          status.className = "auth-status success";
+          status.textContent = `✅ Welcome to TagHouse, ${fullName}!`;
+          setTimeout(() => {
+            window.location.href = selectedType === "agent" || selectedType === "owner" ? "owner.html" : "buyer.html";
+          }, 1500);
+        } catch (err) {
+          status.className = "auth-status error";
+          status.textContent = "❌ " + err.message;
+          btn.disabled = false; btn.textContent = "Create Free Account";
+        }
+      });
+    </script>
+  </body>
+</html>

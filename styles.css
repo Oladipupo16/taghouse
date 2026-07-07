@@ -1,9 +1,9 @@
 :root {
   --ink: #1f1d14;
-  --muted: #66716b;
+  --muted: #101211;
   --paper: #fffdf8;
   --surface: #ffffff;
-  --line: #dfddd2;
+  --line: #d0cdbd;
   --green: #136b4c;
   --green-soft: #dff1e8;
   --gold: #d99f31;
@@ -126,7 +126,7 @@ button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 9px;
+  gap: 20px;
   min-height: 48px;
   padding: 0 18px;
   border: 0;
@@ -202,7 +202,7 @@ h1 {
 .hero-copy {
   max-width: 680px;
   margin: 24px 0 30px;
-  color: #38433e;
+  color: #debc40;
   font-size: clamp(1.04rem, 1.7vw, 1.28rem);
 }
 
@@ -867,6 +867,7 @@ h3 {
     width: 48px;
     padding: 0;
     font-size: 0;
+    justify-content: center;
   }
 
   .search-grid,
@@ -1245,7 +1246,12 @@ textarea {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
   transition: left 500ms ease;
 }
 
@@ -1282,7 +1288,11 @@ textarea {
   left: -100%;
   width: 200%;
   height: 200%;
-  background: radial-gradient(circle, rgba(19, 107, 76, 0.1) 0%, transparent 70%);
+  background: radial-gradient(
+    circle,
+    rgba(19, 107, 76, 0.1) 0%,
+    transparent 70%
+  );
   transition: all 400ms ease;
 }
 
@@ -1434,7 +1444,9 @@ textarea {
 
 /* Enhanced Smooth Transitions Global */
 * {
-  transition: background-color 200ms ease, color 200ms ease;
+  transition:
+    background-color 200ms ease,
+    color 200ms ease;
 }
 
 @media (max-width: 760px) {
@@ -1774,9 +1786,10 @@ textarea {
 .careers-hero,
 .about-hero {
   padding: clamp(52px, 8vw, 96px) clamp(18px, 4vw, 56px);
-  background: linear-gradient(135deg, #0f4d3a 0%, #1a5f4a 100%);
+  background: linear-gradient(135deg, #202b28 0%, #0fb381 100%);
   color: white;
   text-align: center;
+  text-shadow: #111;
 }
 
 .buyer-hero h1,
@@ -2273,9 +2286,9 @@ textarea {
 }
 /* ── Mobile Fixes ─────────────────────────────────────────────── */
 @media (max-width: 760px) {
-
-  /* Fix overflow on all pages */
-  body, html {
+  /* Fix overflow on all page
+  body,
+  html {
     overflow-x: hidden;
     width: 100%;
   }
@@ -2289,13 +2302,19 @@ textarea {
   }
 
   /* Fix hero sections */
-  .buyer-hero, .owner-hero, .agents-hero,
-  .about-hero, .blog-hero, .careers-hero,
-  .contact-hero, .faq-hero {
+  .buyer-hero,
+  .owner-hero,
+  .agents-hero,
+  .about-hero,
+  .blog-hero,
+  .careers-hero,
+  .contact-hero,
+  .faq-hero {
     padding: 40px 16px;
   }
 
-  .buyer-hero h1, .owner-hero h1 {
+  .buyer-hero h1,
+  .owner-hero h1 {
     font-size: 2rem;
   }
 
@@ -2396,7 +2415,8 @@ textarea {
 }
 
 @media (max-width: 420px) {
-  .buyer-hero h1, .owner-hero h1 {
+  .buyer-hero h1,
+  .owner-hero h1 {
     font-size: 1.6rem;
   }
 
@@ -2405,7 +2425,8 @@ textarea {
     font-size: 0.85rem;
   }
 
-  .primary-button, .secondary-button {
+  .primary-button,
+  .secondary-button {
     width: 100%;
     justify-content: center;
   }
@@ -2440,7 +2461,7 @@ textarea {
   background: white;
   padding: 16px;
   gap: 4px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
   z-index: 999;
 }
 
@@ -2472,13 +2493,16 @@ textarea {
     box-sizing: border-box;
   }
 
-  section, .section {
+  section,
+  .section {
     padding-left: 16px;
     padding-right: 16px;
     overflow: hidden;
   }
 
-  h1, h2, h3 {
+  h1,
+  h2,
+  h3 {
     word-break: break-word;
   }
 

@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Login | TagHouse</title>
+    <meta name="description" content="Login to your TagHouse account." />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      .auth-wrap {
+        min-height: calc(100vh - 73px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px clamp(16px, 4vw, 56px);
+      }
+      .auth-card {
+        width: 100%;
+        max-width: 880px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        border-radius: 16px;
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        background: var(--surface);
+      }
+      .auth-panel {
+        background: var(--green);
+        padding: 52px 44px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 0;
+        position: relative;
+        overflow: hidden;
+      }
+      .auth-panel::before {
+        content: "";
+        position: absolute;
+        width: 320px; height: 320px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.06);
+        top: -100px; right: -80px;
+      }
+      .auth-panel::after {
+        content: "";
+        position: absolute;
+        width: 220px; height: 220px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.06);
+        bottom: -70px; left: -60px;
+      }
+      .auth-panel-title {
+        color: #fff;
+        font-size: 1.75rem;
+        font-weight: 800;
+        line-height: 1.25;
+        margin: 0 0 12px;
+        position: relative;
+        z-index: 1;
+      }
+      .auth-panel-desc {
+        color: rgba(255,255,255,0.72);
+        font-size: 0.93rem;
+        line-height: 1.6;
+        margin: 0 0 36px;
+        position: relative;
+        z-index: 1;
+      }
+      .auth-panel-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        position: relative;
+        z-index: 1;
+      }
+      .auth-panel-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: rgba(255,255,255,0.88);
+        font-size: 0.9rem;
+      }
+      .auth-panel-dot {
+        width: 7px; height: 7px;
+        border-radius: 50%;
+        background: var(--gold);
+        flex-shrink: 0;
+      }
+      .auth-form-side {
+        padding: 52px 44px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .auth-title {
+        font-size: 1.45rem;
+        font-weight: 800;
+        color: var(--ink);
+        margin: 0 0 6px;
+      }
+      .auth-subtitle {
+        color: var(--muted);
+        font-size: 0.9rem;
+        margin: 0 0 28px;
+      }
+      .auth-status {
+        padding: 10px 14px;
+        border-radius: var(--radius);
+        font-size: 0.88rem;
+        margin-bottom: 16px;
+        display: none;
+      }
+      .auth-status.error {
+        background: #fef2f2;
+        color: var(--coral);
+        border: 1px solid #fecaca;
+        display: block;
+      }
+      .auth-status.success {
+        background: var(--green-soft);
+        color: var(--green);
+        border: 1px solid #a7d7c3;
+        display: block;
+      }
+      .auth-form {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      .auth-field label {
+        display: block;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--ink);
+        margin-bottom: 6px;
+      }
+      .auth-field input {
+        width: 100%;
+        padding: 11px 14px;
+        border: 1.5px solid var(--line);
+        border-radius: var(--radius);
+        font-size: 0.95rem;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: inherit;
+        outline: none;
+        transition: border-color 0.2s, background 0.2s;
+      }
+      .auth-field input:focus {
+        border-color: var(--green);
+        background: #fff;
+      }
+      .auth-forgot {
+        text-align: right;
+        margin-top: -8px;
+      }
+      .auth-forgot a {
+        color: var(--green);
+        font-size: 0.82rem;
+        font-weight: 600;
+      }
+      .auth-divider {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--muted);
+        font-size: 0.82rem;
+        margin: 4px 0;
+      }
+      .auth-divider::before, .auth-divider::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: var(--line);
+      }
+      .auth-wa-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 11px 14px;
+        border: 1.5px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--paper);
+        color: var(--ink);
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        font-family: inherit;
+        transition: border-color 0.2s, color 0.2s;
+        width: 100%;
+      }
+      .auth-wa-btn:hover {
+        border-color: #25D366;
+        color: #25D366;
+      }
+      .auth-switch {
+        text-align: center;
+        margin-top: 20px;
+        color: var(--muted);
+        font-size: 0.875rem;
+      }
+      .auth-switch a {
+        color: var(--green);
+        font-weight: 700;
+      }
+      @media (max-width: 700px) {
+        .auth-card { grid-template-columns: 1fr; }
+        .auth-panel { display: none; }
+        .auth-form-side { padding: 36px 24px; }
+        .auth-wrap { padding: 24px 16px; align-items: flex-start; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="TagHouse home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" role="img">
+            <path d="M3 11.2 12 4l9 7.2v8.1a1.7 1.7 0 0 1-1.7 1.7h-4.4v-6.2H9.1V21H4.7A1.7 1.7 0 0 1 3 19.3v-8.1Z" />
+            <path d="M9 21v-6.2h6V21" />
+          </svg>
+        </span>
+        <span>TagHouse</span>
+      </a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="buyer.html">Find Property</a>
+        <a href="owner.html">List Property</a>
+        <a href="agents.html">Agents</a>
+        <a href="about.html">About</a>
+      </nav>
+      <a class="header-action" href="signup.html">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
+        Sign Up Free
+      </a>
+    </header>
+
+    <main class="auth-wrap">
+      <div class="auth-card">
+        <div class="auth-panel">
+          <h2 class="auth-panel-title">Welcome back to TagHouse</h2>
+          <p class="auth-panel-desc">Nigeria's most trusted platform for buying, selling, renting and leasing property.</p>
+          <div class="auth-panel-list">
+            <div class="auth-panel-item"><div class="auth-panel-dot"></div><span>1,240+ verified listings across Nigeria</span></div>
+            <div class="auth-panel-item"><div class="auth-panel-dot"></div><span>320+ verified agents ready to help</span></div>
+            <div class="auth-panel-item"><div class="auth-panel-dot"></div><span>Secure escrow for every transaction</span></div>
+            <div class="auth-panel-item"><div class="auth-panel-dot"></div><span>Average response time under 2 hours</span></div>
+          </div>
+        </div>
+        <div class="auth-form-side">
+          <h3 class="auth-title">Login to your account</h3>
+          <p class="auth-subtitle">Enter your details to continue</p>
+          <div class="auth-status" id="authStatus"></div>
+          <form class="auth-form" id="loginForm">
+            <div class="auth-field">
+              <label for="email">Email address</label>
+              <input type="email" id="email" placeholder="your@email.com" required />
+            </div>
+            <div class="auth-field">
+              <label for="password">Password</label>
+              <input type="password" id="password" placeholder="Your password" required />
+            </div>
+            <div class="auth-forgot"><a href="#">Forgot password?</a></div>
+            <button class="primary-button" type="submit" id="submitBtn" style="width:100%;justify-content:center;">
+              Login to TagHouse
+            </button>
+          </form>
+          <div class="auth-divider">or</div>
+          <button class="auth-wa-btn" onclick="window.open('https://wa.me/2341234567890','_blank')">
+            💬 Continue with WhatsApp
+          </button>
+          <div class="auth-switch">Don't have an account? <a href="signup.html">Sign up free</a></div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <a class="brand footer-brand" href="index.html">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" role="img">
+              <path d="M3 11.2 12 4l9 7.2v8.1a1.7 1.7 0 0 1-1.7 1.7h-4.4v-6.2H9.1V21H4.7A1.7 1.7 0 0 1 3 19.3v-8.1Z" />
+              <path d="M9 21v-6.2h6V21" />
+            </svg>
+          </span>
+          <span>TagHouse</span>
+        </a>
+        <p>Nigeria's most trusted real estate marketplace.</p>
+      </div>
+      <div class="footer-section">
+        <h5>Quick Links</h5>
+        <div class="footer-links">
+          <a href="buyer.html">Find Property</a>
+          <a href="owner.html">List Property</a>
+          <a href="agents.html">Find Agents</a>
+          <a href="contact.html">Contact Us</a>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h5>Company</h5>
+        <div class="footer-links">
+          <a href="about.html">About Us</a>
+          <a href="blog.html">Blog & Insights</a>
+          <a href="careers.html">Careers</a>
+          <a href="faq.html">FAQ</a>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h5>Support</h5>
+        <div class="footer-links">
+          <a href="faq.html">FAQ</a>
+          <a href="contact.html">Contact Us</a>
+          <a href="privacy-policy.html">Privacy</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 TagHouse. All rights reserved.</span>
+        <div class="footer-legal">
+          <a href="privacy-policy.html">Privacy Policy</a>
+          <a href="terms-of-service.html">Terms of Service</a>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      const API_BASE = window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost"
+        ? "http://127.0.0.1:8000" : "https://taghouse.onrender.com";
+
+      if (localStorage.getItem("taghouse_token")) window.location.href = "index.html";
+
+      document.getElementById("loginForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+        const btn = document.getElementById("submitBtn");
+        const status = document.getElementById("authStatus");
+        btn.disabled = true; btn.textContent = "Logging in...";
+        status.className = "auth-status";
+        try {
+          const res = await fetch(`${API_BASE}/auth/login`, {
+            method: "POST", headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password }),
+          });
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.detail || "Login failed");
+          localStorage.setItem("taghouse_token", data.access_token);
+          localStorage.setItem("taghouse_email", email);
+          status.className = "auth-status success";
+          status.textContent = "✅ Login successful! Redirecting...";
+          setTimeout(() => { window.location.href = new URLSearchParams(window.location.search).get("redirect") || "index.html"; }, 1000);
+        } catch (err) {
+          status.className = "auth-status error";
+          status.textContent = "❌ " + err.message;
+          btn.disabled = false; btn.textContent = "Login to TagHouse";
+        }
+      });
+    </script>
+  </body>
+</html>
