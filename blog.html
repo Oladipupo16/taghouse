@@ -4,16 +4,336 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Blog | Real Estate Insights from TagHouse</title>
-    <meta name="description" content="Expert real estate advice, market trends, and property investment tips for Nigerian buyers and sellers." />
+    <meta
+      name="description"
+      content="Expert real estate advice, market trends, and property investment tips for Nigerian buyers and sellers."
+    />
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="styles.css" />
+
+    <style>
+      /* ── Shared Hamburger & Mobile Menu ───────────────────── */
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
+        cursor: pointer;
+        padding: 8px;
+        background: none;
+        border: none;
+        flex-shrink: 0;
+      }
+      .hamburger span {
+        display: block;
+        width: 22px;
+        height: 2px;
+        background: var(--ink);
+        border-radius: 2px;
+        transition: all 0.28s ease;
+        transform-origin: center;
+      }
+      .hamburger.active span:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+      }
+      .hamburger.active span:nth-child(2) {
+        opacity: 0;
+        transform: scaleX(0);
+      }
+      .hamburger.active span:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+      }
+
+      .mobile-menu {
+        display: none;
+        flex-direction: column;
+        position: fixed;
+        top: 64px;
+        left: 0;
+        right: 0;
+        background: white;
+        padding: 10px 16px 24px;
+        gap: 2px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.13);
+        z-index: 9999;
+        border-top: 1px solid var(--line);
+        max-height: calc(100vh - 64px);
+        overflow-y: auto;
+      }
+      .mobile-menu.open {
+        display: flex;
+      }
+      .mobile-menu a {
+        padding: 13px 16px;
+        font-size: 0.97rem;
+        font-weight: 500;
+        color: var(--ink);
+        text-decoration: none;
+        border-radius: var(--radius);
+        transition: background 0.15s;
+        display: block;
+      }
+      .mobile-menu a:hover,
+      .mobile-menu a:active {
+        background: var(--surface);
+      }
+      .mobile-menu-divider {
+        height: 1px;
+        background: var(--line);
+        margin: 8px 0;
+      }
+      .mobile-menu-action {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 13px 16px;
+        border-radius: var(--radius);
+        font-weight: 800;
+        font-size: 0.95rem;
+        text-align: center;
+        margin-top: 4px;
+        text-decoration: none;
+      }
+      .mobile-menu-login {
+        border: 1.5px solid var(--green);
+        color: var(--green) !important;
+        background: transparent;
+      }
+      .mobile-menu-signup {
+        background: var(--green);
+        color: #debc40 !important;
+        margin-top: 8px;
+      }
+
+      @media (max-width: 1020px) {
+        .hamburger {
+          display: flex;
+        }
+        .main-nav {
+          display: none !important;
+        }
+        .header-action {
+          display: none !important;
+        }
+      }
+
+      /* ── Global Responsive Fixes ───────────────────────────── */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html {
+        overflow-x: hidden;
+      }
+
+      body {
+        overflow-x: hidden;
+        width: 100%;
+        max-width: 100vw;
+      }
+
+      img,
+      video,
+      iframe,
+      embed {
+        max-width: 100%;
+        height: auto;
+      }
+
+      /* Sections */
+      section,
+      .section {
+        padding-left: clamp(16px, 4vw, 56px);
+        padding-right: clamp(16px, 4vw, 56px);
+      }
+
+      @media (max-width: 1020px) {
+        /* Hero sections */
+        .hero-section {
+          grid-template-columns: 1fr !important;
+          padding: 40px clamp(16px, 4vw, 32px) !important;
+          gap: 32px;
+        }
+        .hero-copy {
+          max-width: 100% !important;
+        }
+        .hero-visual {
+          display: none !important;
+        }
+        .buyer-hero,
+        .owner-hero,
+        .agents-hero,
+        .about-hero,
+        .blog-hero,
+        .careers-hero,
+        .contact-hero,
+        .faq-hero {
+          padding: 48px clamp(16px, 4vw, 32px) !important;
+        }
+
+        /* Search form */
+        .search-shell {
+          padding: 16px !important;
+          margin: 0 !important;
+          border-radius: 12px !important;
+        }
+        .search-tabs {
+          flex-wrap: wrap;
+          gap: 6px;
+        }
+        .search-grid {
+          grid-template-columns: 1fr !important;
+          gap: 10px;
+        }
+
+        /* Listing grid */
+        .listing-grid {
+          grid-template-columns: 1fr !important;
+          gap: 16px;
+        }
+
+        /* Quick filter chips */
+        .quick-filters {
+          overflow-x: auto;
+          flex-wrap: nowrap !important;
+          padding-bottom: 6px;
+          -webkit-overflow-scrolling: touch;
+          scrollbar-width: none;
+        }
+        .quick-filters::-webkit-scrollbar {
+          display: none;
+        }
+
+        /* Grids → single column */
+        .three-col-grid,
+        .stats-grid,
+        .benefits-grid,
+        .agents-grid,
+        .blog-grid,
+        .contact-grid,
+        .faq-grid,
+        .jobs-list {
+          grid-template-columns: 1fr !important;
+        }
+
+        /* Split sections */
+        .split-section {
+          grid-template-columns: 1fr !important;
+          gap: 32px;
+        }
+        .inspection-panel {
+          width: 100% !important;
+        }
+
+        /* Owner form */
+        .owner-form {
+          grid-template-columns: 1fr !important;
+        }
+        .owner-form .wide {
+          grid-column: 1 !important;
+        }
+
+        /* Typography */
+        h1 {
+          font-size: clamp(1.75rem, 7vw, 3rem) !important;
+        }
+        h2 {
+          font-size: clamp(1.4rem, 5vw, 2.2rem) !important;
+        }
+
+        /* Buttons full-width on small forms */
+        .search-shell .primary-button {
+          width: 100%;
+          justify-content: center;
+        }
+
+        /* Footer */
+        .site-footer {
+          grid-template-columns: 1fr !important;
+          gap: 28px;
+          padding: 40px clamp(16px, 4vw, 32px) !important;
+        }
+        .footer-bottom {
+          flex-direction: column !important;
+          gap: 10px;
+          text-align: center;
+        }
+        .footer-legal {
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 12px;
+        }
+
+        /* Dialog */
+        .listing-dialog {
+          width: 96vw !important;
+          max-width: 96vw !important;
+          max-height: 88vh !important;
+          margin: auto !important;
+          border-radius: 12px !important;
+        }
+
+        /* Remove extra bottom space */
+        main {
+          padding-bottom: 0 !important;
+        }
+        body {
+          padding-bottom: 0 !important;
+        }
+      }
+
+      @media (max-width: 600px) {
+        h1 {
+          font-size: clamp(1.5rem, 8vw, 2.2rem) !important;
+        }
+        h2 {
+          font-size: clamp(1.2rem, 6vw, 1.8rem) !important;
+        }
+        .tab-button {
+          padding: 8px 14px !important;
+          font-size: 0.85rem !important;
+        }
+        .chip {
+          padding: 6px 14px !important;
+          font-size: 0.82rem !important;
+        }
+        .primary-button,
+        .secondary-button {
+          min-height: 44px !important;
+          font-size: 0.93rem !important;
+        }
+        .agent-stats {
+          flex-wrap: wrap !important;
+          gap: 8px !important;
+        }
+        .stats-grid {
+          grid-template-columns: 1fr 1fr !important;
+        }
+        .auth-stats-grid {
+          grid-template-columns: 1fr 1fr !important;
+        }
+        .job-header {
+          flex-direction: column !important;
+          align-items: flex-start !important;
+          gap: 6px !important;
+        }
+        .section-heading {
+          padding: 0 !important;
+        }
+      }
+    </style>
   </head>
   <body>
     <header class="site-header">
       <a class="brand" href="index.html" aria-label="TagHouse home">
         <span class="brand-mark" aria-hidden="true">
           <svg viewBox="0 0 24 24" role="img">
-            <path d="M3 11.2 12 4l9 7.2v8.1a1.7 1.7 0 0 1-1.7 1.7h-4.4v-6.2H9.1V21H4.7A1.7 1.7 0 0 1 3 19.3v-8.1Z" />
+            <path
+              d="M3 11.2 12 4l9 7.2v8.1a1.7 1.7 0 0 1-1.7 1.7h-4.4v-6.2H9.1V21H4.7A1.7 1.7 0 0 1 3 19.3v-8.1Z"
+            />
             <path d="M9 21v-6.2h6V21" />
           </svg>
         </span>
@@ -29,15 +349,73 @@
       </nav>
 
       <a class="header-action" href="owner.html">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 5v14M5 12h14" />
+        </svg>
         List Now
       </a>
-    <button class="hamburger" id="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button><nav class="mobile-menu" id="mobileMenu"><a href="index.html">Home</a><a href="buyer.html">Find Property</a><a href="owner.html">List Property</a><a href="agents.html">Agents</a><a href="about.html">About</a></nav></header>
+
+      <!-- Hamburger -->
+      <button
+        class="hamburger"
+        id="hamburger"
+        aria-label="Open menu"
+        aria-expanded="false"
+      >
+        <span></span><span></span><span></span>
+      </button>
+    </header>
+    <!-- Mobile menu -->
+    <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
+      <a href="index.html">Home</a>
+      <a href="buyer.html">Find Property</a>
+      <a href="owner.html">List Property</a>
+      <a href="agents.html">Agents</a>
+      <a href="about.html">About</a>
+      <div class="mobile-menu-divider"></div>
+      <a
+        href="owner.html"
+        class="mobile-menu-action"
+        style="border: 1.5px solid var(--green); color: var(--green)"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          style="
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+          "
+          aria-hidden="true"
+        >
+          <path d="M12 5v14M5 12h14" />
+        </svg>
+        List Now
+      </a>
+      <a
+        href="login.html"
+        class="mobile-menu-action mobile-menu-login"
+        style="margin-top: 6px"
+        >Login</a
+      >
+      <a
+        href="signup.html"
+        class="mobile-menu-action mobile-menu-signup"
+        style="margin-top: 6px"
+        >Sign Up Free</a
+      >
+    </nav>
+    <!-- Mobile navigation menu -->
 
     <main>
       <section class="blog-hero">
         <h1>Real Estate Insights & Market Trends</h1>
-        <p class="lead">Expert advice for buyers, sellers, and investors in Nigeria.</p>
+        <p class="lead">
+          Expert advice for buyers, sellers, and investors in Nigeria.
+        </p>
       </section>
 
       <section class="section">
@@ -47,8 +425,9 @@
             <span class="blog-date">June 1, 2026</span>
             <h3>5 Essential Tips for First-Time Home Buyers in Nigeria</h3>
             <p>
-              Buying your first home is a major milestone. Learn how to avoid common pitfalls, verify property titles, 
-              negotiate prices, and secure the best mortgage options available in Nigeria's market.
+              Buying your first home is a major milestone. Learn how to avoid
+              common pitfalls, verify property titles, negotiate prices, and
+              secure the best mortgage options available in Nigeria's market.
             </p>
             <a href="#" class="read-more">Read More →</a>
           </article>
@@ -56,10 +435,14 @@
           <article class="blog-card">
             <div class="blog-image">🏠</div>
             <span class="blog-date">May 28, 2026</span>
-            <h3>Lagos Real Estate Market: Hotspots & Investment Opportunities 2026</h3>
+            <h3>
+              Lagos Real Estate Market: Hotspots & Investment Opportunities 2026
+            </h3>
             <p>
-              An in-depth analysis of property prices across Lagos neighborhoods. Which areas are appreciating fastest? 
-              Where should you invest for rental income? Our data-driven guide reveals the opportunities.
+              An in-depth analysis of property prices across Lagos
+              neighborhoods. Which areas are appreciating fastest? Where should
+              you invest for rental income? Our data-driven guide reveals the
+              opportunities.
             </p>
             <a href="#" class="read-more">Read More →</a>
           </article>
@@ -69,8 +452,9 @@
             <span class="blog-date">May 25, 2026</span>
             <h3>How to Price Your Property for Quick Sale</h3>
             <p>
-              Price too high and your home sits on the market. Price too low and you leave money on the table. 
-              Discover the data-backed strategies agents use to find the sweet spot and attract serious buyers.
+              Price too high and your home sits on the market. Price too low and
+              you leave money on the table. Discover the data-backed strategies
+              agents use to find the sweet spot and attract serious buyers.
             </p>
             <a href="#" class="read-more">Read More →</a>
           </article>
@@ -80,8 +464,10 @@
             <span class="blog-date">May 20, 2026</span>
             <h3>The Complete Property Inspection Checklist for Buyers</h3>
             <p>
-              Before you commit, you need to know what to look for. Our comprehensive checklist covers structural issues, 
-              electrical systems, plumbing, security, and the red flags that should make you walk away.
+              Before you commit, you need to know what to look for. Our
+              comprehensive checklist covers structural issues, electrical
+              systems, plumbing, security, and the red flags that should make
+              you walk away.
             </p>
             <a href="#" class="read-more">Read More →</a>
           </article>
@@ -89,10 +475,15 @@
           <article class="blog-card">
             <div class="blog-image">⚖️</div>
             <span class="blog-date">May 15, 2026</span>
-            <h3>Understanding Property Titles: C of O, Survey Plans & Land Registration</h3>
+            <h3>
+              Understanding Property Titles: C of O, Survey Plans & Land
+              Registration
+            </h3>
             <p>
-              Confused about Nigerian property titles? We break down the difference between C of O, survey plans, 
-              and how to verify clear titles before making an offer. Protect yourself from fraudulent claims.
+              Confused about Nigerian property titles? We break down the
+              difference between C of O, survey plans, and how to verify clear
+              titles before making an offer. Protect yourself from fraudulent
+              claims.
             </p>
             <a href="#" class="read-more">Read More →</a>
           </article>
@@ -100,10 +491,13 @@
           <article class="blog-card">
             <div class="blog-image">💡</div>
             <span class="blog-date">May 10, 2026</span>
-            <h3>Investment Properties: Generating Passive Income from Real Estate</h3>
+            <h3>
+              Investment Properties: Generating Passive Income from Real Estate
+            </h3>
             <p>
-              Looking to build wealth through real estate? Learn how to identify high-yield rental properties, 
-              calculate ROI, manage tenant relationships, and structure your portfolio for long-term success.
+              Looking to build wealth through real estate? Learn how to identify
+              high-yield rental properties, calculate ROI, manage tenant
+              relationships, and structure your portfolio for long-term success.
             </p>
             <a href="#" class="read-more">Read More →</a>
           </article>
@@ -113,8 +507,9 @@
             <span class="blog-date">May 5, 2026</span>
             <h3>Abuja Real Estate Boom: Emerging Areas Worth Watching</h3>
             <p>
-              Abuja's real estate market is evolving fast. Discover which districts are attracting investors, 
-              development trends, and where savvy buyers are placing their bets for appreciation.
+              Abuja's real estate market is evolving fast. Discover which
+              districts are attracting investors, development trends, and where
+              savvy buyers are placing their bets for appreciation.
             </p>
             <a href="#" class="read-more">Read More →</a>
           </article>
@@ -122,10 +517,13 @@
           <article class="blog-card">
             <div class="blog-image">🏗️</div>
             <span class="blog-date">April 30, 2026</span>
-            <h3>New Real Estate Regulations: What Buyers & Sellers Need to Know</h3>
+            <h3>
+              New Real Estate Regulations: What Buyers & Sellers Need to Know
+            </h3>
             <p>
-              Government regulations around property transactions are changing. Stay informed about new compliance 
-              requirements, tax implications, and how these changes affect your buying and selling strategy.
+              Government regulations around property transactions are changing.
+              Stay informed about new compliance requirements, tax implications,
+              and how these changes affect your buying and selling strategy.
             </p>
             <a href="#" class="read-more">Read More →</a>
           </article>
@@ -135,8 +533,9 @@
             <span class="blog-date">April 25, 2026</span>
             <h3>Remote Work & Real Estate: Relocating for the New Normal</h3>
             <p>
-              With remote work becoming permanent for many, people are rethinking where they live. 
-              Explore how this trend is reshaping Nigeria's real estate market and creating new opportunities.
+              With remote work becoming permanent for many, people are
+              rethinking where they live. Explore how this trend is reshaping
+              Nigeria's real estate market and creating new opportunities.
             </p>
             <a href="#" class="read-more">Read More →</a>
           </article>
@@ -146,8 +545,9 @@
             <span class="blog-date">April 20, 2026</span>
             <h3>Secure Your Real Estate Investment: Avoiding Fraud & Scams</h3>
             <p>
-              Property fraud is common. Protect yourself by understanding common scams, how to verify agent credentials, 
-              secure payment methods, and the red flags that indicate a dishonest deal.
+              Property fraud is common. Protect yourself by understanding common
+              scams, how to verify agent credentials, secure payment methods,
+              and the red flags that indicate a dishonest deal.
             </p>
             <a href="#" class="read-more">Read More →</a>
           </article>
@@ -155,10 +555,13 @@
           <article class="blog-card">
             <div class="blog-image">📈</div>
             <span class="blog-date">April 15, 2026</span>
-            <h3>Port Harcourt Commercial Real Estate: Trends & Opportunities</h3>
+            <h3>
+              Port Harcourt Commercial Real Estate: Trends & Opportunities
+            </h3>
             <p>
-              Oil & gas sector dynamics are reshaping Port Harcourt's commercial property market. 
-              Learn where to find opportunities and how to position yourself in this evolving landscape.
+              Oil & gas sector dynamics are reshaping Port Harcourt's commercial
+              property market. Learn where to find opportunities and how to
+              position yourself in this evolving landscape.
             </p>
             <a href="#" class="read-more">Read More →</a>
           </article>
@@ -166,10 +569,14 @@
           <article class="blog-card">
             <div class="blog-image">🎓</div>
             <span class="blog-date">April 10, 2026</span>
-            <h3>Student Accommodation Guide: Finding Affordable Housing Near Universities</h3>
+            <h3>
+              Student Accommodation Guide: Finding Affordable Housing Near
+              Universities
+            </h3>
             <p>
-              Students and parents searching for housing near universities need practical advice. 
-              Discover neighborhoods, pricing, housing types, and tips for securing the best student accommodation.
+              Students and parents searching for housing near universities need
+              practical advice. Discover neighborhoods, pricing, housing types,
+              and tips for securing the best student accommodation.
             </p>
             <a href="#" class="read-more">Read More →</a>
           </article>
@@ -182,13 +589,18 @@
         <a class="brand footer-brand" href="index.html">
           <span class="brand-mark" aria-hidden="true">
             <svg viewBox="0 0 24 24" role="img">
-              <path d="M3 11.2 12 4l9 7.2v8.1a1.7 1.7 0 0 1-1.7 1.7h-4.4v-6.2H9.1V21H4.7A1.7 1.7 0 0 1 3 19.3v-8.1Z" />
+              <path
+                d="M3 11.2 12 4l9 7.2v8.1a1.7 1.7 0 0 1-1.7 1.7h-4.4v-6.2H9.1V21H4.7A1.7 1.7 0 0 1 3 19.3v-8.1Z"
+              />
               <path d="M9 21v-6.2h6V21" />
             </svg>
           </span>
           <span>TagHouse</span>
         </a>
-        <p>Your source for real estate insights, market trends, and investment strategies.</p>
+        <p>
+          Your source for real estate insights, market trends, and investment
+          strategies.
+        </p>
       </div>
       <div class="footer-section">
         <h5>Quick Links</h5>
@@ -214,5 +626,100 @@
         </div>
       </div>
     </footer>
+
+    <script>
+      // Hamburger menu
+      const _ham = document.getElementById("hamburger");
+      const _menu = document.getElementById("mobileMenu");
+      if (_ham && _menu) {
+        _ham.addEventListener("click", () => {
+          const open = _menu.classList.toggle("open");
+          _ham.setAttribute("aria-expanded", open);
+          _ham.classList.toggle("active", open);
+        });
+        document.addEventListener("click", (e) => {
+          if (!_ham.contains(e.target) && !_menu.contains(e.target)) {
+            _menu.classList.remove("open");
+            _ham.classList.remove("active");
+            _ham.setAttribute("aria-expanded", false);
+          }
+        });
+      }
+      // Update header based on login state
+      const _token = localStorage.getItem("taghouse_token");
+      const _name =
+        localStorage.getItem("taghouse_name") ||
+        localStorage.getItem("taghouse_email") ||
+        "";
+      const _action = document.querySelector(".header-action");
+      if (_token && _action) {
+        _action.href = "#";
+        _action.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> ${_name.split("@")[0] || "Account"}`;
+        _action.addEventListener("click", (e) => {
+          e.preventDefault();
+          if (confirm("Log out of TagHouse?")) {
+            localStorage.removeItem("taghouse_token");
+            localStorage.removeItem("taghouse_email");
+            localStorage.removeItem("taghouse_name");
+            localStorage.removeItem("taghouse_type");
+            window.location.href = "index.html";
+          }
+        });
+      }
+    </script>
+
+    <script>
+      (function () {
+        var ham = document.getElementById("hamburger");
+        var menu = document.getElementById("mobileMenu");
+        if (!ham || !menu) return;
+        ham.addEventListener("click", function () {
+          var open = menu.classList.toggle("open");
+          ham.classList.toggle("active", open);
+          ham.setAttribute("aria-expanded", open);
+        });
+        document.addEventListener("click", function (e) {
+          if (!ham.contains(e.target) && !menu.contains(e.target)) {
+            menu.classList.remove("open");
+            ham.classList.remove("active");
+            ham.setAttribute("aria-expanded", "false");
+          }
+        });
+        // Highlight active page
+        var path = window.location.pathname.split("/").pop() || "index.html";
+        menu.querySelectorAll("a").forEach(function (a) {
+          var href = a.getAttribute("href");
+          if (href === path) a.style.color = "var(--green)";
+        });
+        // Auth state
+        var token = localStorage.getItem("taghouse_token");
+        var name =
+          localStorage.getItem("taghouse_name") ||
+          localStorage.getItem("taghouse_email") ||
+          "";
+        var headerAction = document.querySelector(".header-action");
+        if (token && headerAction) {
+          var shortName = name.split("@")[0] || "Account";
+          headerAction.href = "#";
+          headerAction.innerHTML =
+            '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> ' +
+            shortName;
+          headerAction.addEventListener("click", function (e) {
+            e.preventDefault();
+            if (confirm("Log out of TagHouse?")) {
+              [
+                "taghouse_token",
+                "taghouse_email",
+                "taghouse_name",
+                "taghouse_type",
+              ].forEach(function (k) {
+                localStorage.removeItem(k);
+              });
+              window.location.href = "index.html";
+            }
+          });
+        }
+      })();
+    </script>
   </body>
 </html>

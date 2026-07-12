@@ -7,6 +7,233 @@
     <meta name="description" content="Find answers to frequently asked questions about buying, selling, renting, and leasing property on TagHouse." />
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="styles.css" />
+
+      <style>
+      /* ── Shared Hamburger & Mobile Menu ───────────────────── */
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
+        cursor: pointer;
+        padding: 8px;
+        background: none;
+        border: none;
+        flex-shrink: 0;
+      }
+      .hamburger span {
+        display: block;
+        width: 22px;
+        height: 2px;
+        background: var(--ink);
+        border-radius: 2px;
+        transition: all 0.28s ease;
+        transform-origin: center;
+      }
+      .hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+      .hamburger.active span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+      .hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+      .mobile-menu {
+        display: none;
+        flex-direction: column;
+        position: fixed;
+        top: 64px;
+        left: 0; right: 0;
+        background: white;
+        padding: 10px 16px 24px;
+        gap: 2px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.13);
+        z-index: 9999;
+        border-top: 1px solid var(--line);
+        max-height: calc(100vh - 64px);
+        overflow-y: auto;
+      }
+      .mobile-menu.open { display: flex; }
+      .mobile-menu a {
+        padding: 13px 16px;
+        font-size: 0.97rem;
+        font-weight: 500;
+        color: var(--ink);
+        text-decoration: none;
+        border-radius: var(--radius);
+        transition: background 0.15s;
+        display: block;
+      }
+      .mobile-menu a:hover,
+      .mobile-menu a:active { background: var(--surface); }
+      .mobile-menu-divider {
+        height: 1px;
+        background: var(--line);
+        margin: 8px 0;
+      }
+      .mobile-menu-action {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 13px 16px;
+        border-radius: var(--radius);
+        font-weight: 800;
+        font-size: 0.95rem;
+        text-align: center;
+        margin-top: 4px;
+        text-decoration: none;
+      }
+      .mobile-menu-login {
+        border: 1.5px solid var(--green);
+        color: var(--green) !important;
+        background: transparent;
+      }
+      .mobile-menu-signup {
+        background: var(--green);
+        color: #debc40 !important;
+        margin-top: 8px;
+      }
+
+      @media (max-width: 1020px) {
+        .hamburger { display: flex; }
+        .main-nav { display: none !important; }
+        .header-action { display: none !important; }
+      }
+
+      /* ── Global Responsive Fixes ───────────────────────────── */
+      *, *::before, *::after { box-sizing: border-box; }
+
+      html { overflow-x: hidden; }
+
+      body {
+        overflow-x: hidden;
+        width: 100%;
+        max-width: 100vw;
+      }
+
+      img, video, iframe, embed {
+        max-width: 100%;
+        height: auto;
+      }
+
+      /* Sections */
+      section, .section {
+        padding-left: clamp(16px, 4vw, 56px);
+        padding-right: clamp(16px, 4vw, 56px);
+      }
+
+      @media (max-width: 1020px) {
+        /* Hero sections */
+        .hero-section {
+          grid-template-columns: 1fr !important;
+          padding: 40px clamp(16px, 4vw, 32px) !important;
+          gap: 32px;
+        }
+        .hero-copy { max-width: 100% !important; }
+        .hero-visual { display: none !important; }
+        .buyer-hero, .owner-hero, .agents-hero,
+        .about-hero, .blog-hero, .careers-hero,
+        .contact-hero, .faq-hero {
+          padding: 48px clamp(16px, 4vw, 32px) !important;
+        }
+
+        /* Search form */
+        .search-shell {
+          padding: 16px !important;
+          margin: 0 !important;
+          border-radius: 12px !important;
+        }
+        .search-tabs { flex-wrap: wrap; gap: 6px; }
+        .search-grid {
+          grid-template-columns: 1fr !important;
+          gap: 10px;
+        }
+
+        /* Listing grid */
+        .listing-grid {
+          grid-template-columns: 1fr !important;
+          gap: 16px;
+        }
+
+        /* Quick filter chips */
+        .quick-filters {
+          overflow-x: auto;
+          flex-wrap: nowrap !important;
+          padding-bottom: 6px;
+          -webkit-overflow-scrolling: touch;
+          scrollbar-width: none;
+        }
+        .quick-filters::-webkit-scrollbar { display: none; }
+
+        /* Grids → single column */
+        .three-col-grid,
+        .stats-grid,
+        .benefits-grid,
+        .agents-grid,
+        .blog-grid,
+        .contact-grid,
+        .faq-grid,
+        .jobs-list {
+          grid-template-columns: 1fr !important;
+        }
+
+        /* Split sections */
+        .split-section {
+          grid-template-columns: 1fr !important;
+          gap: 32px;
+        }
+        .inspection-panel { width: 100% !important; }
+
+        /* Owner form */
+        .owner-form {
+          grid-template-columns: 1fr !important;
+        }
+        .owner-form .wide { grid-column: 1 !important; }
+
+        /* Typography */
+        h1 { font-size: clamp(1.75rem, 7vw, 3rem) !important; }
+        h2 { font-size: clamp(1.4rem, 5vw, 2.2rem) !important; }
+
+        /* Buttons full-width on small forms */
+        .search-shell .primary-button { width: 100%; justify-content: center; }
+
+        /* Footer */
+        .site-footer {
+          grid-template-columns: 1fr !important;
+          gap: 28px;
+          padding: 40px clamp(16px, 4vw, 32px) !important;
+        }
+        .footer-bottom {
+          flex-direction: column !important;
+          gap: 10px;
+          text-align: center;
+        }
+        .footer-legal { flex-wrap: wrap; justify-content: center; gap: 12px; }
+
+        /* Dialog */
+        .listing-dialog {
+          width: 96vw !important;
+          max-width: 96vw !important;
+          max-height: 88vh !important;
+          margin: auto !important;
+          border-radius: 12px !important;
+        }
+
+        /* Remove extra bottom space */
+        main { padding-bottom: 0 !important; }
+        body { padding-bottom: 0 !important; }
+      }
+
+      @media (max-width: 600px) {
+        h1 { font-size: clamp(1.5rem, 8vw, 2.2rem) !important; }
+        h2 { font-size: clamp(1.2rem, 6vw, 1.8rem) !important; }
+        .tab-button { padding: 8px 14px !important; font-size: 0.85rem !important; }
+        .chip { padding: 6px 14px !important; font-size: 0.82rem !important; }
+        .primary-button, .secondary-button { min-height: 44px !important; font-size: 0.93rem !important; }
+        .agent-stats { flex-wrap: wrap !important; gap: 8px !important; }
+        .stats-grid { grid-template-columns: 1fr 1fr !important; }
+        .auth-stats-grid { grid-template-columns: 1fr 1fr !important; }
+        .job-header { flex-direction: column !important; align-items: flex-start !important; gap: 6px !important; }
+        .section-heading { padding: 0 !important; }
+      }
+    </style>
   </head>
   <body>
     <header class="site-header">
@@ -31,7 +258,29 @@
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
         List Now
       </a>
-    <button class="hamburger" id="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button><nav class="mobile-menu" id="mobileMenu"><a href="index.html">Home</a><a href="buyer.html">Find Property</a><a href="owner.html">List Property</a><a href="agents.html">Agents</a><a href="about.html">About</a></nav></header>
+
+          <!-- Hamburger -->
+      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </header>
+    <!-- Mobile menu -->
+    <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
+      <a href="index.html">🏠 Home</a>
+      <a href="buyer.html">🔍 Find Property</a>
+      <a href="owner.html">📋 List Property</a>
+      <a href="agents.html">🤝 Agents</a>
+      <a href="about.html">ℹ️ About</a>
+      <div class="mobile-menu-divider"></div>
+      <a href="owner.html" class="mobile-menu-action" style="border:1.5px solid var(--green);color:var(--green);">
+        <svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+        List Now
+      </a>
+      <a href="login.html" class="mobile-menu-action mobile-menu-login" style="margin-top:6px;">Login</a>
+      <a href="signup.html" class="mobile-menu-action mobile-menu-signup" style="margin-top:6px;">Sign Up Free</a>
+    </nav>
+    <!-- Mobile navigation menu -->
+
 
     <main>
       <section class="faq-hero">
@@ -232,5 +481,85 @@
         </div>
       </div>
     </footer>
+  
+    <script>
+      // Hamburger menu
+      const _ham = document.getElementById('hamburger');
+      const _menu = document.getElementById('mobileMenu');
+      if (_ham && _menu) {
+        _ham.addEventListener('click', () => {
+          const open = _menu.classList.toggle('open');
+          _ham.setAttribute('aria-expanded', open);
+          _ham.classList.toggle('active', open);
+        });
+        document.addEventListener('click', (e) => {
+          if (!_ham.contains(e.target) && !_menu.contains(e.target)) {
+            _menu.classList.remove('open');
+            _ham.classList.remove('active');
+            _ham.setAttribute('aria-expanded', false);
+          }
+        });
+      }
+      // Update header based on login state
+      const _token = localStorage.getItem('taghouse_token');
+      const _name = localStorage.getItem('taghouse_name') || localStorage.getItem('taghouse_email') || '';
+      const _action = document.querySelector('.header-action');
+      if (_token && _action) {
+        _action.href = '#';
+        _action.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> ${_name.split('@')[0] || 'Account'}`;
+        _action.addEventListener('click', (e) => {
+          e.preventDefault();
+          if (confirm('Log out of TagHouse?')) {
+            localStorage.removeItem('taghouse_token');
+            localStorage.removeItem('taghouse_email');
+            localStorage.removeItem('taghouse_name');
+            localStorage.removeItem('taghouse_type');
+            window.location.href = 'index.html';
+          }
+        });
+      }
+    </script>
+
+      <script>
+      (function() {
+        var ham = document.getElementById('hamburger');
+        var menu = document.getElementById('mobileMenu');
+        if (!ham || !menu) return;
+        ham.addEventListener('click', function() {
+          var open = menu.classList.toggle('open');
+          ham.classList.toggle('active', open);
+          ham.setAttribute('aria-expanded', open);
+        });
+        document.addEventListener('click', function(e) {
+          if (!ham.contains(e.target) && !menu.contains(e.target)) {
+            menu.classList.remove('open');
+            ham.classList.remove('active');
+            ham.setAttribute('aria-expanded', 'false');
+          }
+        });
+        // Highlight active page
+        var path = window.location.pathname.split('/').pop() || 'index.html';
+        menu.querySelectorAll('a').forEach(function(a) {
+          var href = a.getAttribute('href');
+          if (href === path) a.style.color = 'var(--green)';
+        });
+        // Auth state
+        var token = localStorage.getItem('taghouse_token');
+        var name = localStorage.getItem('taghouse_name') || localStorage.getItem('taghouse_email') || '';
+        var headerAction = document.querySelector('.header-action');
+        if (token && headerAction) {
+          var shortName = name.split('@')[0] || 'Account';
+          headerAction.href = '#';
+          headerAction.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> ' + shortName;
+          headerAction.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (confirm('Log out of TagHouse?')) {
+              ['taghouse_token','taghouse_email','taghouse_name','taghouse_type'].forEach(function(k){ localStorage.removeItem(k); });
+              window.location.href = 'index.html';
+            }
+          });
+        }
+      })();
+    </script>
   </body>
 </html>

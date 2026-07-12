@@ -10,6 +10,703 @@
     />
     <link rel="icon" href="assets/favicon.svg" type="image/svg" />
     <link rel="stylesheet" href="styles.css" />
+
+    <style>
+      /* ── Shared Hamburger & Mobile Menu ───────────────────── */
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
+        cursor: pointer;
+        padding: 8px;
+        background: none;
+        border: none;
+        flex-shrink: 0;
+      }
+      .hamburger span {
+        display: block;
+        width: 22px;
+        height: 2px;
+        background: var(--ink);
+        border-radius: 2px;
+        transition: all 0.28s ease;
+        transform-origin: center;
+      }
+      .hamburger.active span:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+      }
+      .hamburger.active span:nth-child(2) {
+        opacity: 0;
+        transform: scaleX(0);
+      }
+      .hamburger.active span:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+      }
+
+      .mobile-menu {
+        display: none;
+        flex-direction: column;
+        position: fixed;
+        top: 64px;
+        left: 0;
+        right: 0;
+        background: var(--paper);
+        padding: 10px 16px 24px;
+        gap: 2px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.13);
+        z-index: 9999;
+        border-top: 1px solid var(--line);
+        max-height: calc(100vh - 64px);
+        overflow-y: auto;
+      }
+      .mobile-menu.open {
+        display: flex;
+      }
+      .mobile-menu a {
+        padding: 13px 16px;
+        font-size: 0.99rem;
+        font-weight: 500;
+        color: var(--green);
+        text-decoration: none;
+        border-radius: var(--radius);
+        transition: background 0.15s;
+        display: block;
+        font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+      }
+      .mobile-menu a:hover,
+      .mobile-menu a:active {
+        background: var(--green-soft);
+      }
+      .mobile-menu-divider {
+        height: 1px;
+        background: var(--line);
+        margin: 8px 0;
+      }
+      .mobile-menu-action {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 13px 16px;
+        border-radius: var(--radius);
+        font-weight: 800;
+        font-size: 0.95rem;
+        text-align: center;
+        margin-top: 4px;
+        text-decoration: none;
+      }
+      .mobile-menu-login {
+        border: 1.5px solid var(--green);
+        color: var(--green) !important;
+        background: #debc40 ;
+      }
+      .mobile-menu-signup {
+        background: var(--green);
+        color: #debc40 !important;
+        margin-top: 8px;
+      }
+
+      @media (max-width: 1020px) {
+        .hamburger {
+          display: flex;
+        }
+        .main-nav {
+          display: none !important;
+        }
+        .header-action {
+          display: none !important;
+        }
+      }
+
+      /* ── Global Responsive Fixes ───────────────────────────── */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html {
+        overflow-x: hidden;
+      }
+
+      body {
+        overflow-x: hidden;
+        width: 100%;
+        max-width: 100vw;
+      }
+
+      img,
+      video,
+      iframe,
+      embed {
+        max-width: 100%;
+        height: auto;
+      }
+
+      /* Sections */
+      section,
+      .section {
+        padding-left: clamp(16px, 4vw, 56px);
+        padding-right: clamp(16px, 4vw, 56px);
+      }
+
+      @media (max-width: 1020px) {
+        /* Hero sections */
+        .hero-section {
+          grid-template-columns: 1fr !important;
+          padding: 40px clamp(16px, 4vw, 32px) !important;
+          gap: 32px;
+        }
+        .hero-copy {
+          max-width: 100% !important;
+        }
+        .hero-visual {
+          display: none !important;
+        }
+        .buyer-hero,
+        .owner-hero,
+        .agents-hero,
+        .about-hero,
+        .blog-hero,
+        .careers-hero,
+        .contact-hero,
+        .faq-hero {
+          padding: 48px clamp(16px, 4vw, 32px) !important;
+        }
+
+        /* Search form */
+        .search-shell {
+          padding: 16px !important;
+          margin: 0 !important;
+          border-radius: 12px !important;
+        }
+        .search-tabs {
+          flex-wrap: wrap;
+          gap: 6px;
+        }
+        .search-grid {
+          grid-template-columns: 1fr !important;
+          gap: 10px;
+        }
+
+        /* Listing grid */
+        .listing-grid {
+          grid-template-columns: 1fr !important;
+          gap: 16px;
+        }
+
+        /* Quick filter chips */
+        .quick-filters {
+          overflow-x: auto;
+          flex-wrap: nowrap !important;
+          padding-bottom: 6px;
+          -webkit-overflow-scrolling: touch;
+          scrollbar-width: none;
+        }
+        .quick-filters::-webkit-scrollbar {
+          display: none;
+        }
+
+        /* Grids → single column */
+        .three-col-grid,
+        .stats-grid,
+        .benefits-grid,
+        .agents-grid,
+        .blog-grid,
+        .contact-grid,
+        .faq-grid,
+        .jobs-list {
+          grid-template-columns: 1fr !important;
+        }
+
+        /* Split sections */
+        .split-section {
+          grid-template-columns: 1fr !important;
+          gap: 32px;
+        }
+        .inspection-panel {
+          width: 100% !important;
+        }
+
+        /* Owner form */
+        .owner-form {
+          grid-template-columns: 1fr !important;
+        }
+        .owner-form .wide {
+          grid-column: 1 !important;
+        }
+
+        /* Typography */
+        h1 {
+          font-size: clamp(1.75rem, 7vw, 3rem) !important;
+        }
+        h2 {
+          font-size: clamp(1.4rem, 5vw, 2.2rem) !important;
+        }
+
+        /* Buttons full-width on small forms */
+        .search-shell .primary-button {
+          width: 100%;
+          justify-content: center;
+        }
+
+        /* Footer */
+        .site-footer {
+          grid-template-columns: 1fr !important;
+          gap: 28px;
+          padding: 40px clamp(16px, 4vw, 32px) !important;
+        }
+        .footer-bottom {
+          flex-direction: column !important;
+          gap: 10px;
+          text-align: center;
+        }
+        .footer-legal {
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 12px;
+        }
+
+        /* Dialog */
+        .listing-dialog {
+          width: 96vw !important;
+          max-width: 96vw !important;
+          max-height: 88vh !important;
+          margin: auto !important;
+          border-radius: 12px !important;
+        }
+
+        /* Remove extra bottom space */
+        main {
+          padding-bottom: 0 !important;
+        }
+        body {
+          padding-bottom: 0 !important;
+        }
+      }
+
+      @media (max-width: 600px) {
+        h1 {
+          font-size: clamp(1.5rem, 8vw, 2.2rem) !important;
+        }
+        h2 {
+          font-size: clamp(1.2rem, 6vw, 1.8rem) !important;
+        }
+        .tab-button {
+          padding: 8px 14px !important;
+          font-size: 0.85rem !important;
+        }
+        .chip {
+          padding: 6px 14px !important;
+          font-size: 0.82rem !important;
+        }
+        .primary-button,
+        .secondary-button {
+          min-height: 44px !important;
+          font-size: 0.93rem !important;
+        }
+        .agent-stats {
+          flex-wrap: wrap !important;
+          gap: 8px !important;
+        }
+        .stats-grid {
+          grid-template-columns: 1fr 1fr !important;
+        }
+        .auth-stats-grid {
+          grid-template-columns: 1fr 1fr !important;
+        }
+        .job-header {
+          flex-direction: column !important;
+          align-items: flex-start !important;
+          gap: 6px !important;
+        }
+        .section-heading {
+          padding: 0 !important;
+        }
+      }
+
+      /* ── Header Auth Buttons ───────────────────────────────── */
+      .header-auth {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-shrink: 0;
+      }
+      .header-login-btn {
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: var(--green);
+        padding: 10px 18px;
+        border-radius: var(--radius);
+        border: 1.5px solid var(--green);
+        transition:
+          background 0.2s,
+          color 0.2s;
+        white-space: nowrap;
+      }
+      .header-login-btn:hover {
+        background: var(--green);
+        color: white;
+      }
+      @media (max-width: 1020px) {
+        .header-auth {
+          display: none !important;
+        }
+      }
+
+      /* ── Auth Modal ────────────────────────────────────────── */
+      .auth-modal-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.55);
+        z-index: 10000;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+        backdrop-filter: blur(4px);
+      }
+      .auth-modal-overlay.open {
+        display: flex;
+      }
+      .auth-modal {
+        background: white;
+        border-radius: 16px;
+        width: 100%;
+        max-width: 860px;
+        max-height: 92vh;
+        overflow: hidden;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        box-shadow: 0 32px 80px rgba(0, 0, 0, 0.25);
+        position: relative;
+      }
+      .auth-modal-close {
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: rgba(0, 0, 0, 0.1);
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10;
+        transition: background 0.2s;
+      }
+      .auth-modal-close:hover {
+        background: rgba(0, 0, 0, 0.2);
+      }
+      .auth-modal-close svg {
+        width: 16px;
+        height: 16px;
+        stroke: white;
+        fill: none;
+        stroke-width: 2;
+        stroke-linecap: round;
+      }
+      .auth-modal-panel {
+        background: var(--green);
+        padding: 52px 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .auth-modal-panel::before {
+        content: "";
+        position: absolute;
+        width: 280px;
+        height: 280px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.07);
+        top: -80px;
+        right: -60px;
+      }
+      .auth-modal-panel::after {
+        content: "";
+        position: absolute;
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.07);
+        bottom: -50px;
+        left: -40px;
+      }
+      .auth-modal-panel-title {
+        color: white;
+        font-size: 1.6rem;
+        font-weight: 800;
+        line-height: 1.25;
+        margin: 0 0 12px;
+        position: relative;
+        z-index: 1;
+      }
+      .auth-modal-panel-desc {
+        color: rgba(255, 255, 255, 0.75);
+        font-size: 0.92rem;
+        line-height: 1.6;
+        margin: 0 0 28px;
+        position: relative;
+        z-index: 1;
+      }
+      .auth-modal-panel-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        position: relative;
+        z-index: 1;
+      }
+      .auth-modal-panel-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: rgba(255, 255, 255, 0.88);
+        font-size: 0.88rem;
+      }
+      .auth-modal-panel-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--gold);
+        flex-shrink: 0;
+      }
+      .auth-modal-stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-top: 24px;
+        position: relative;
+        z-index: 1;
+      }
+      .auth-modal-stat {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        padding: 12px;
+      }
+      .auth-modal-stat strong {
+        display: block;
+        color: var(--gold);
+        font-size: 1.3rem;
+        font-weight: 800;
+      }
+      .auth-modal-stat span {
+        color: rgba(255, 255, 255, 0.75);
+        font-size: 0.78rem;
+      }
+      .auth-modal-form-side {
+        padding: 44px 40px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .auth-modal-tabs {
+        display: flex;
+        gap: 4px;
+        background: var(--paper);
+        border-radius: 10px;
+        padding: 4px;
+        margin-bottom: 24px;
+      }
+      .auth-modal-tab {
+        flex: 1;
+        padding: 10px;
+        border: none;
+        border-radius: 8px;
+        font-family: inherit;
+        font-size: 0.9rem;
+        font-weight: 700;
+        cursor: pointer;
+        background: transparent;
+        color: var(--muted);
+        transition: all 0.2s;
+      }
+      .auth-modal-tab.active {
+        background: white;
+        color: var(--green);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      }
+      .auth-modal-form-panel {
+        display: none;
+      }
+      .auth-modal-form-panel.active {
+        display: block;
+      }
+      .auth-form-fields {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+      .auth-form-field label {
+        display: block;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--ink);
+        margin-bottom: 5px;
+      }
+      .auth-form-field input {
+        width: 100%;
+        padding: 11px 14px;
+        border: 1.5px solid var(--line);
+        border-radius: var(--radius);
+        font-size: 0.93rem;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: inherit;
+        outline: none;
+        transition:
+          border-color 0.2s,
+          background 0.2s;
+      }
+      .auth-form-field input:focus {
+        border-color: var(--green);
+        background: white;
+      }
+      .auth-acct-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 8px;
+        margin-bottom: 4px;
+      }
+      .auth-acct-btn {
+        border: 1.5px solid var(--line);
+        border-radius: var(--radius);
+        padding: 9px 4px;
+        text-align: center;
+        cursor: pointer;
+        background: var(--paper);
+        font-family: inherit;
+        font-size: 0.78rem;
+        font-weight: 500;
+        color: var(--ink);
+        transition: all 0.2s;
+      }
+      .auth-acct-btn .ai {
+        font-size: 1.1rem;
+        display: block;
+        margin-bottom: 3px;
+      }
+      .auth-acct-btn.active {
+        border-color: var(--green);
+        background: var(--green-soft);
+        color: var(--green);
+        font-weight: 700;
+      }
+      .auth-modal-status {
+        padding: 10px 14px;
+        border-radius: var(--radius);
+        font-size: 0.86rem;
+        display: none;
+        margin-bottom: 12px;
+      }
+      .auth-modal-status.error {
+        background: #fef2f2;
+        color: var(--coral);
+        border: 1px solid #fecaca;
+        display: block;
+      }
+      .auth-modal-status.success {
+        background: var(--green-soft);
+        color: var(--green);
+        border: 1px solid #a7d7c3;
+        display: block;
+      }
+      .pw-strength {
+        height: 3px;
+        border-radius: 2px;
+        background: var(--line);
+        margin-top: 5px;
+        overflow: hidden;
+      }
+      .pw-bar {
+        height: 100%;
+        width: 0%;
+        border-radius: 2px;
+        transition:
+          width 0.3s,
+          background 0.3s;
+      }
+      .auth-field-error {
+        color: var(--coral);
+        font-size: 0.78rem;
+        display: none;
+        margin-top: 3px;
+      }
+      .auth-field-error.show {
+        display: block;
+      }
+      .auth-modal-switch {
+        text-align: center;
+        margin-top: 14px;
+        color: var(--muted);
+        font-size: 0.85rem;
+      }
+      .auth-modal-switch button {
+        background: none;
+        border: none;
+        color: var(--green);
+        font-weight: 700;
+        cursor: pointer;
+        font-family: inherit;
+        font-size: 0.85rem;
+      }
+      .auth-modal-divider {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--muted);
+        font-size: 0.8rem;
+        margin: 8px 0;
+      }
+      .auth-modal-divider::before,
+      .auth-modal-divider::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: var(--line);
+      }
+      .auth-wa-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
+        padding: 11px;
+        border: 1.5px solid var(--line);
+        border-radius: var(--radius);
+        background: white;
+        color: var(--ink);
+        font-size: 0.88rem;
+        font-weight: 600;
+        cursor: pointer;
+        font-family: inherit;
+        transition:
+          border-color 0.2s,
+          color 0.2s;
+      }
+      .auth-wa-btn:hover {
+        border-color: #25d366;
+        color: #25d366;
+      }
+      @media (max-width: 700px) {
+        .auth-modal {
+          grid-template-columns: 1fr;
+          max-height: 98vh;
+        }
+        .auth-modal-panel {
+          display: none;
+        }
+        .auth-modal-form-side {
+          padding: 32px 20px;
+        }
+      }
+    </style>
   </head>
   <body>
     <header class="site-header">
@@ -33,29 +730,55 @@
         <a href="about.html">About</a>
       </nav>
 
-      <a class="header-action" href="owner.html">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M12 5v14M5 12h14" />
-        </svg>
+      <div class="header-auth" id="headerAuth">
+        <a href="login.html" class="header-login-btn">Login</a>
+        <a href="signup.html" class="header-action">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 5v14M5 12h14" />
+          </svg>
+          Sign Up Free
+        </a>
+      </div>
+
+      <!-- Hamburger -->
+      <button
+        class="hamburger"
+        id="hamburger"
+        aria-label="Open menu"
+        aria-expanded="false"
+      >
+        <span></span><span></span><span></span>
+      </button>
+    </header>
+    <!-- Mobile menu -->
+    <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
+      <a href="index.html">Home</a>
+      <a href="buyer.html">Find Property</a>
+      <a href="owner.html">List Property</a>
+      <a href="agents.html">Agents</a>
+      <a href="about.html">About</a>
+      <div class="mobile-menu-divider"></div>
+      <a
+        href="owner.html"
+        class="mobile-menu-action"
+        style="border: 1.5px solid var(--green); color: var(--green)"
+      >
         List Now
       </a>
-
-      <!-- Mobile hamburger -->
-      <button class="hamburger" id="hamburger" aria-label="Open menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-
-      <!-- Mobile nav menu -->
-      <nav class="mobile-menu" id="mobileMenu">
-        <a href="index.html">Home</a>
-        <a href="buyer.html">Find Property</a>
-        <a href="owner.html">List Property</a>
-        <a href="agents.html">Agents</a>
-        <a href="about.html">About</a>
-      </nav>
-    </header>
+      <a
+        href="login.html"
+        class="mobile-menu-action mobile-menu-login"
+        style="margin-top: 6px"
+        >Login</a
+      >
+      <a
+        href="signup.html"
+        class="mobile-menu-action mobile-menu-signup"
+        style="margin-top: 6px"
+        >Sign Up Free</a
+      >
+    </nav>
+    <!-- Mobile navigation menu -->
 
     <main id="top">
       <section class="hero-section" aria-labelledby="hero-title">
@@ -144,10 +867,12 @@
           class="hero-visual"
           aria-label="Featured housing and land listings"
         >
-          <img
-            src="assets/TagHouseHero.png"
-            alt="Modern apartments, land plot, and listing preview"
-          />
+          <div class="hero-visual-gradient">
+            <img
+              src="assets/TagHouseHero.png"
+              alt="Modern apartments, land plot, and listing preview"
+            />
+          </div>
         </div>
       </section>
 
@@ -540,6 +1265,131 @@
           <p class="form-status wide" id="formStatus" role="status"></p>
         </form>
       </section>
+
+      <!-- Login / Sign Up CTA Section -->
+      <section
+        class="section auth-cta-section"
+        style="background: var(--green); padding: 72px clamp(18px, 4vw, 56px)"
+      >
+        <div style="max-width: 800px; margin: 0 auto; text-align: center">
+          <p class="eyebrow" style="color: var(--gold); margin-bottom: 12px">
+            JOIN TAGHOUSE TODAY
+          </p>
+          <h2
+            style="
+              color: white;
+              font-size: clamp(1.8rem, 4vw, 2.6rem);
+              font-weight: 800;
+              margin: 0 0 16px;
+              line-height: 1.2;
+            "
+          >
+            Your Next Property Move Starts Here
+          </h2>
+          <p
+            style="
+              color: rgba(255, 255, 255, 0.78);
+              font-size: 1.05rem;
+              line-height: 1.6;
+              margin: 0 0 40px;
+              max-width: 560px;
+              margin-left: auto;
+              margin-right: auto;
+            "
+          >
+            Create a free account to save listings, contact agents directly,
+            submit your property, and track your enquiries — all in one place.
+          </p>
+          <div
+            style="
+              display: flex;
+              gap: 14px;
+              justify-content: center;
+              flex-wrap: wrap;
+            "
+          >
+            <a
+              href="signup.html"
+              class="primary-button"
+              style="
+                font-size: 1rem;
+                padding: 14px 32px;
+                background: var(--gold);
+                color: var(--ink);
+                border: none;
+              "
+            >
+              <svg
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+                style="width: 18px; height: 18px"
+              >
+                <path d="M12 5v14M5 12h14" />
+              </svg>
+              Create Free Account
+            </a>
+            <a
+              href="login.html"
+              class="secondary-button"
+              style="
+                font-size: 1rem;
+                padding: 14px 32px;
+                background: transparent;
+                color: white;
+                border: 2px solid rgba(255, 255, 255, 0.5);
+              "
+            >
+              Login to TagHouse
+            </a>
+          </div>
+          <div
+            style="
+              display: flex;
+              gap: 32px;
+              justify-content: center;
+              margin-top: 40px;
+              flex-wrap: wrap;
+            "
+          >
+            <div style="text-align: center; color: rgba(255, 255, 255, 0.85)">
+              <strong
+                style="
+                  display: block;
+                  font-size: 1.6rem;
+                  color: white;
+                  font-weight: 800;
+                "
+                >Free</strong
+              >
+              <span style="font-size: 0.88rem">Always free to browse</span>
+            </div>
+            <div style="text-align: center; color: rgba(255, 255, 255, 0.85)">
+              <strong
+                style="
+                  display: block;
+                  font-size: 1.6rem;
+                  color: white;
+                  font-weight: 800;
+                "
+                >2min</strong
+              >
+              <span style="font-size: 0.88rem">Quick sign-up process</span>
+            </div>
+            <div style="text-align: center; color: rgba(255, 255, 255, 0.85)">
+              <strong
+                style="
+                  display: block;
+                  font-size: 1.6rem;
+                  color: white;
+                  font-weight: 800;
+                "
+                >50K+</strong
+              >
+              <span style="font-size: 0.88rem">Users already joined</span>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
 
     <footer class="site-footer">
@@ -637,13 +1487,556 @@
     <script src="app.js"></script>
 
     <script>
-      const hamburger = document.getElementById("hamburger");
-      const mobileMenu = document.getElementById("mobileMenu");
-      if (hamburger) {
-        hamburger.addEventListener("click", () => {
-          mobileMenu.classList.toggle("open");
+      (function () {
+        var ham = document.getElementById("hamburger");
+        var menu = document.getElementById("mobileMenu");
+        if (!ham || !menu) return;
+        ham.addEventListener("click", function () {
+          var open = menu.classList.toggle("open");
+          ham.classList.toggle("active", open);
+          ham.setAttribute("aria-expanded", open);
+        });
+        document.addEventListener("click", function (e) {
+          if (!ham.contains(e.target) && !menu.contains(e.target)) {
+            menu.classList.remove("open");
+            ham.classList.remove("active");
+            ham.setAttribute("aria-expanded", "false");
+          }
+        });
+        // Highlight active page
+        var path = window.location.pathname.split("/").pop() || "index.html";
+        menu.querySelectorAll("a").forEach(function (a) {
+          var href = a.getAttribute("href");
+          if (href === path) a.style.color = "var(--green)";
+        });
+        // Auth state
+        var token = localStorage.getItem("taghouse_token");
+        var name =
+          localStorage.getItem("taghouse_name") ||
+          localStorage.getItem("taghouse_email") ||
+          "";
+        var headerAction = document.querySelector(".header-action");
+        if (token && headerAction) {
+          var shortName = name.split("@")[0] || "Account";
+          headerAction.href = "#";
+          headerAction.innerHTML =
+            '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> ' +
+            shortName;
+          headerAction.addEventListener("click", function (e) {
+            e.preventDefault();
+            if (confirm("Log out of TagHouse?")) {
+              [
+                "taghouse_token",
+                "taghouse_email",
+                "taghouse_name",
+                "taghouse_type",
+              ].forEach(function (k) {
+                localStorage.removeItem(k);
+              });
+              window.location.href = "index.html";
+            }
+          });
+        }
+      })();
+    </script>
+
+    <!-- ── Auth Modal ──────────────────────────────────────────── -->
+    <div
+      class="auth-modal-overlay"
+      id="authModalOverlay"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="authModalTitle"
+    >
+      <div class="auth-modal">
+        <button class="auth-modal-close" id="authModalClose" aria-label="Close">
+          <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" /></svg>
+        </button>
+
+        <!-- Left panel -->
+        <div class="auth-modal-panel" id="authModalPanel">
+          <h2 class="auth-modal-panel-title" id="authModalTitle">
+            Welcome to TagHouse
+          </h2>
+          <p class="auth-modal-panel-desc">
+            Nigeria's most trusted platform for buying, selling, renting and
+            leasing property.
+          </p>
+          <div class="auth-modal-panel-list">
+            <div class="auth-modal-panel-item">
+              <div class="auth-modal-panel-dot"></div>
+              <span>1,240+ verified listings</span>
+            </div>
+            <div class="auth-modal-panel-item">
+              <div class="auth-modal-panel-dot"></div>
+              <span>320+ verified agents</span>
+            </div>
+            <div class="auth-modal-panel-item">
+              <div class="auth-modal-panel-dot"></div>
+              <span>Secure escrow protection</span>
+            </div>
+            <div class="auth-modal-panel-item">
+              <div class="auth-modal-panel-dot"></div>
+              <span>Under 2hr agent response</span>
+            </div>
+          </div>
+          <div class="auth-modal-stats">
+            <div class="auth-modal-stat">
+              <strong>50K+</strong><span>Happy Users</span>
+            </div>
+            <div class="auth-modal-stat">
+              <strong>18</strong><span>Cities</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right form side -->
+        <div class="auth-modal-form-side">
+          <!-- Tabs -->
+          <div class="auth-modal-tabs">
+            <button
+              class="auth-modal-tab active"
+              id="tabLogin"
+              onclick="switchTab('login')"
+            >
+              Login
+            </button>
+            <button
+              class="auth-modal-tab"
+              id="tabSignup"
+              onclick="switchTab('signup')"
+            >
+              Sign Up Free
+            </button>
+          </div>
+
+          <!-- LOGIN FORM -->
+          <div class="auth-modal-form-panel active" id="panelLogin">
+            <div class="auth-modal-status" id="loginStatus"></div>
+            <form class="auth-form-fields" id="modalLoginForm">
+              <div class="auth-form-field">
+                <label for="loginEmail">Email address</label>
+                <input
+                  type="email"
+                  id="loginEmail"
+                  placeholder="your@email.com"
+                  required
+                />
+              </div>
+              <div class="auth-form-field">
+                <label for="loginPassword">Password</label>
+                <input
+                  type="password"
+                  id="loginPassword"
+                  placeholder="Your password"
+                  required
+                />
+              </div>
+              <div style="text-align: right; margin-top: -6px">
+                <a
+                  href="#"
+                  style="
+                    color: var(--green);
+                    font-size: 0.82rem;
+                    font-weight: 600;
+                  "
+                  >Forgot password?</a
+                >
+              </div>
+              <button
+                class="primary-button"
+                type="submit"
+                id="loginBtn"
+                style="width: 100%; justify-content: center; margin-top: 4px"
+              >
+                Login to TagHouse
+              </button>
+            </form>
+            <div class="auth-modal-divider">or</div>
+            <button
+              class="auth-wa-btn"
+              onclick="window.open('https://wa.me/2341234567890', '_blank')"
+            >
+              💬 Continue with WhatsApp
+            </button>
+            <div class="auth-modal-switch">
+              No account?
+              <button onclick="switchTab('signup')">Sign up free →</button>
+            </div>
+          </div>
+
+          <!-- SIGNUP FORM -->
+          <div class="auth-modal-form-panel" id="panelSignup">
+            <div class="auth-modal-status" id="signupStatus"></div>
+            <div style="margin-bottom: 16px">
+              <label
+                style="
+                  font-size: 0.85rem;
+                  font-weight: 600;
+                  color: var(--ink);
+                  display: block;
+                  margin-bottom: 8px;
+                "
+                >I am a:</label
+              >
+              <div class="auth-acct-grid">
+                <button
+                  class="auth-acct-btn active"
+                  data-type="buyer"
+                  type="button"
+                >
+                  <span class="ai">🔍</span>Buyer/Renter
+                </button>
+                <button class="auth-acct-btn" data-type="owner" type="button">
+                  <span class="ai">🏠</span>Property Owner
+                </button>
+                <button class="auth-acct-btn" data-type="agent" type="button">
+                  <span class="ai">🤝</span>Agent
+                </button>
+              </div>
+            </div>
+            <form class="auth-form-fields" id="modalSignupForm">
+              <div class="auth-form-field">
+                <label for="signupName">Full name</label>
+                <input
+                  type="text"
+                  id="signupName"
+                  placeholder="Your full name"
+                  required
+                />
+              </div>
+              <div class="auth-form-field">
+                <label for="signupEmail">Email address</label>
+                <input
+                  type="email"
+                  id="signupEmail"
+                  placeholder="your@email.com"
+                  required
+                />
+              </div>
+              <div class="auth-form-field">
+                <label for="signupPhone">Phone number</label>
+                <input
+                  type="tel"
+                  id="signupPhone"
+                  placeholder="+234 800 000 0000"
+                />
+              </div>
+              <div class="auth-form-field">
+                <label for="signupPassword">Password</label>
+                <input
+                  type="password"
+                  id="signupPassword"
+                  placeholder="Min. 8 characters"
+                  required
+                />
+                <div class="pw-strength">
+                  <div class="pw-bar" id="modalPwBar"></div>
+                </div>
+              </div>
+              <div class="auth-form-field">
+                <label for="signupConfirm">Confirm password</label>
+                <input
+                  type="password"
+                  id="signupConfirm"
+                  placeholder="Repeat password"
+                  required
+                />
+                <span class="auth-field-error" id="signupConfirmErr"
+                  >Passwords do not match</span
+                >
+              </div>
+              <p
+                style="
+                  font-size: 0.78rem;
+                  color: var(--muted);
+                  text-align: center;
+                  margin: 0;
+                "
+              >
+                By signing up you agree to our
+                <a
+                  href="terms-of-service.html"
+                  style="color: var(--green); font-weight: 500"
+                  >Terms</a
+                >
+                and
+                <a
+                  href="privacy-policy.html"
+                  style="color: var(--green); font-weight: 500"
+                  >Privacy Policy</a
+                >
+              </p>
+              <button
+                class="primary-button"
+                type="submit"
+                id="signupBtn"
+                style="width: 100%; justify-content: center; margin-top: 4px"
+              >
+                Create Free Account
+              </button>
+            </form>
+            <div class="auth-modal-switch">
+              Have an account?
+              <button onclick="switchTab('login')">Login →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // ── Auth Modal Logic ─────────────────────────────────────────
+      const API_BASE =
+        window.location.hostname === "127.0.0.1" ||
+        window.location.hostname === "localhost"
+          ? "http://127.0.0.1:8000"
+          : "https://taghouse.onrender.com";
+
+      const overlay = document.getElementById("authModalOverlay");
+      const modalClose = document.getElementById("authModalClose");
+
+      function openAuthModal(tab) {
+        overlay.classList.add("open");
+        document.body.style.overflow = "hidden";
+        switchTab(tab || "login");
+      }
+
+      function closeAuthModal() {
+        overlay.classList.remove("open");
+        document.body.style.overflow = "";
+      }
+
+      function switchTab(tab) {
+        document
+          .getElementById("tabLogin")
+          .classList.toggle("active", tab === "login");
+        document
+          .getElementById("tabSignup")
+          .classList.toggle("active", tab === "signup");
+        document
+          .getElementById("panelLogin")
+          .classList.toggle("active", tab === "login");
+        document
+          .getElementById("panelSignup")
+          .classList.toggle("active", tab === "signup");
+        document.getElementById("authModalTitle").textContent =
+          tab === "login" ? "Welcome Back" : "Join TagHouse Free";
+      }
+
+      if (modalClose) modalClose.addEventListener("click", closeAuthModal);
+      overlay.addEventListener("click", function (e) {
+        if (e.target === overlay) closeAuthModal();
+      });
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") closeAuthModal();
+      });
+
+      // Wire up header Login/Signup links to open modal instead of navigating away
+      document.addEventListener("DOMContentLoaded", function () {
+        var loginLinks = document.querySelectorAll('a[href="login.html"]');
+        var signupLinks = document.querySelectorAll('a[href="signup.html"]');
+        loginLinks.forEach(function (a) {
+          a.addEventListener("click", function (e) {
+            e.preventDefault();
+            openAuthModal("login");
+          });
+        });
+        signupLinks.forEach(function (a) {
+          a.addEventListener("click", function (e) {
+            e.preventDefault();
+            openAuthModal("signup");
+          });
+        });
+
+        // Auth state — update header & mobile menu if logged in
+        var token = localStorage.getItem("taghouse_token");
+        var name =
+          localStorage.getItem("taghouse_name") ||
+          localStorage.getItem("taghouse_email") ||
+          "";
+        if (token) {
+          var shortName = name.split("@")[0] || "Account";
+          // Update desktop header
+          var authDiv = document.getElementById("headerAuth");
+          if (authDiv) {
+            authDiv.innerHTML =
+              '<a href="#" id="logoutBtn" class="header-action" style="background:var(--green-soft);color:var(--green);">' +
+              '<svg viewBox="0 0 24 24" aria-hidden="true" style="width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> ' +
+              shortName +
+              "</a>";
+            document
+              .getElementById("logoutBtn")
+              .addEventListener("click", function (e) {
+                e.preventDefault();
+                if (confirm("Log out of TagHouse?")) {
+                  [
+                    "taghouse_token",
+                    "taghouse_email",
+                    "taghouse_name",
+                    "taghouse_type",
+                  ].forEach(function (k) {
+                    localStorage.removeItem(k);
+                  });
+                  window.location.reload();
+                }
+              });
+          }
+          // Update mobile menu
+          var mobileLoginBtn = document.querySelector(".mobile-menu-login");
+          var mobileSignupBtn = document.querySelector(".mobile-menu-signup");
+          if (mobileLoginBtn) {
+            mobileLoginBtn.textContent = "👤 " + shortName;
+            mobileLoginBtn.href = "#";
+          }
+          if (mobileSignupBtn) {
+            mobileSignupBtn.textContent = "Logout";
+            mobileSignupBtn.addEventListener("click", function (e) {
+              e.preventDefault();
+              if (confirm("Log out of TagHouse?")) {
+                [
+                  "taghouse_token",
+                  "taghouse_email",
+                  "taghouse_name",
+                  "taghouse_type",
+                ].forEach(function (k) {
+                  localStorage.removeItem(k);
+                });
+                window.location.reload();
+              }
+            });
+          }
+        }
+      });
+
+      // Account type selector
+      var selectedType = "buyer";
+      document.querySelectorAll(".auth-acct-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          document.querySelectorAll(".auth-acct-btn").forEach(function (b) {
+            b.classList.remove("active");
+          });
+          btn.classList.add("active");
+          selectedType = btn.dataset.type;
+        });
+      });
+
+      // Password strength
+      var signupPw = document.getElementById("signupPassword");
+      if (signupPw) {
+        signupPw.addEventListener("input", function () {
+          var v = this.value,
+            bar = document.getElementById("modalPwBar"),
+            s = 0;
+          if (v.length >= 8) s++;
+          if (/[A-Z]/.test(v)) s++;
+          if (/[0-9]/.test(v)) s++;
+          if (/[^A-Za-z0-9]/.test(v)) s++;
+          bar.style.width = s > 0 ? ["25%", "50%", "75%", "100%"][s - 1] : "0%";
+          bar.style.background =
+            s > 0
+              ? ["#ef4444", "#f97316", "#eab308", "#22c55e"][s - 1]
+              : "transparent";
         });
       }
+
+      // LOGIN submit
+      document
+        .getElementById("modalLoginForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+          var email = document.getElementById("loginEmail").value.trim();
+          var password = document.getElementById("loginPassword").value;
+          var btn = document.getElementById("loginBtn");
+          var status = document.getElementById("loginStatus");
+          btn.disabled = true;
+          btn.textContent = "Logging in...";
+          status.className = "auth-modal-status";
+          try {
+            var res = await fetch(API_BASE + "/auth/login", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ email, password }),
+            });
+            var data = await res.json();
+            if (!res.ok) throw new Error(data.detail || "Login failed");
+            localStorage.setItem("taghouse_token", data.access_token);
+            localStorage.setItem("taghouse_email", email);
+            status.className = "auth-modal-status success";
+            status.textContent = "✅ Login successful! Welcome back.";
+            setTimeout(function () {
+              closeAuthModal();
+              window.location.reload();
+            }, 1200);
+          } catch (err) {
+            status.className = "auth-modal-status error";
+            status.textContent = "❌ " + err.message;
+            btn.disabled = false;
+            btn.textContent = "Login to TagHouse";
+          }
+        });
+
+      // SIGNUP submit
+      document
+        .getElementById("modalSignupForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+          var fullName = document.getElementById("signupName").value.trim();
+          var email = document.getElementById("signupEmail").value.trim();
+          var password = document.getElementById("signupPassword").value;
+          var confirm = document.getElementById("signupConfirm").value;
+          var confirmErr = document.getElementById("signupConfirmErr");
+          var btn = document.getElementById("signupBtn");
+          var status = document.getElementById("signupStatus");
+          if (password !== confirm) {
+            confirmErr.classList.add("show");
+            return;
+          }
+          confirmErr.classList.remove("show");
+          if (password.length < 8) {
+            status.className = "auth-modal-status error";
+            status.textContent = "❌ Password must be at least 8 characters";
+            return;
+          }
+          btn.disabled = true;
+          btn.textContent = "Creating account...";
+          status.className = "auth-modal-status";
+          try {
+            var res = await fetch(API_BASE + "/auth/signup", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ email, password, full_name: fullName }),
+            });
+            var data = await res.json();
+            if (!res.ok) throw new Error(data.detail || "Signup failed");
+            // Auto login
+            var lr = await fetch(API_BASE + "/auth/login", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ email, password }),
+            });
+            var ld = await lr.json();
+            if (lr.ok) {
+              localStorage.setItem("taghouse_token", ld.access_token);
+              localStorage.setItem("taghouse_email", email);
+              localStorage.setItem("taghouse_name", fullName);
+              localStorage.setItem("taghouse_type", selectedType);
+            }
+            status.className = "auth-modal-status success";
+            status.textContent = "✅ Welcome to TagHouse, " + fullName + "!";
+            setTimeout(function () {
+              closeAuthModal();
+              if (selectedType === "agent" || selectedType === "owner")
+                window.location.href = "owner.html";
+              else window.location.reload();
+            }, 1400);
+          } catch (err) {
+            status.className = "auth-modal-status error";
+            status.textContent = "❌ " + err.message;
+            btn.disabled = false;
+            btn.textContent = "Create Free Account";
+          }
+        });
     </script>
   </body>
 </html>
