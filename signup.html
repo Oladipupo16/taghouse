@@ -460,101 +460,122 @@
 
     <script>
       const API_BASE =
-        window.location.hostname === "127.0.0.1" ||
-        window.location.hostname === "localhost"
-          ? "http://127.0.0.1:8000"
-          : "https://taghouse.onrender.com";
+  window.location.hostname === "127.0.0.1" ||
+  window.location.hostname === "localhost"
+    ? "http://127.0.0.1:8000"
+    : "https://taghouse.onrender.com";
 
-      let selectedType = "buyer";
-      document.querySelectorAll(".acct-type-btn").forEach((btn) => {
-        btn.addEventListener("click", () => {
-          document
-            .querySelectorAll(".acct-type-btn")
-            .forEach((b) => b.classList.remove("active"));
-          btn.classList.add("active");
-          selectedType = btn.dataset.type;
-        });
+let selectedType = "buyer";
+document.querySelectorAll(".acct-type-btn").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    document
+      .querySelectorAll(".acct-type-btn")
+      .forEach((b) => b.classList.remove("active"));
+    btn.classList.add("active");
+    selectedType = btn.dataset.type;
+  });
+});
+
+document.getElementById("password").addEventListener("input", (e) => {
+  const v = e.target.value,
+    bar = document.getElementById("pwBar");
+  let s = 0;
+  if (v.length >= 8) s++;
+  if (/[A-Z]/.test(v)) s++;
+  if (/[0-9]/.test(v)) s++;
+  if (/[^A-Za-z0-9]/.test(v)) s++;
+  bar.style.width = s > 0 ? ["25%", "50%", "75%", "100%"][s - 1] : "0%";
+  bar.style.background =
+    s > 0
+      ? ["#ef4444", "#f97316", "#eab308", "#22c55e"][s - 1]
+      : "transparent";
+});
+
+document
+  .getElementById("signupForm")
+  .addEventListener("submit", async (e) => {
+    e.preventDefault();
+    
+    const fullName = document.getElementById("fullName").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+    const confirmPw = document.getElementById("confirmPw").value;
+    const confirmErr = document.getElementById("confirmErr");
+    const status = document.getElementById("authStatus");
+    const btn = document.getElementById("submitBtn");
+
+    // 1. Reset UI States immediately on every new submit attempt
+    confirmErr.classList.remove("visible");
+    status.className = "auth-status";
+    status.textContent = "";
+
+    // 2. Validation Checks
+    if (password !== confirmPw) {
+      confirmErr.classList.add("visible");
+      return;
+    }
+    if (password.length < 8) {
+      status.className = "auth-status error";
+      status.textContent = "❌ Password must be at least 8 characters";
+      return;
+    }
+
+    // 3. Freeze UI during network flight
+    btn.disabled = true;
+    btn.textContent = "Creating account...";
+
+    try {
+      // 4. API Signup (Now passing the account/role type)
+      const res = await fetch(`${API_BASE}/auth/signup`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          email, 
+          password, 
+          full_name: fullName,
+          account_type: selectedType // Check if your backend expects 'account_type' or 'role'
+        }),
       });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.detail || "Signup failed");
 
-      document.getElementById("password").addEventListener("input", (e) => {
-        const v = e.target.value,
-          bar = document.getElementById("pwBar");
-        let s = 0;
-        if (v.length >= 8) s++;
-        if (/[A-Z]/.test(v)) s++;
-        if (/[0-9]/.test(v)) s++;
-        if (/[^A-Za-z0-9]/.test(v)) s++;
-        bar.style.width = s > 0 ? ["25%", "50%", "75%", "100%"][s - 1] : "0%";
-        bar.style.background =
-          s > 0
-            ? ["#ef4444", "#f97316", "#eab308", "#22c55e"][s - 1]
-            : "transparent";
+      // 5. API Auto-Login
+      // NOTE: If backend uses standard FastAPI OAuth2PasswordRequestForm, use Form-Data instead of JSON:
+      // const formData = new URLSearchParams();
+      // formData.append("username", email);
+      // formData.append("password", password);
+      const loginRes = await fetch(`${API_BASE}/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" }, 
+        body: JSON.stringify({ email, password }),
       });
+      
+      const loginData = await loginRes.json();
+      if (loginRes.ok) {
+        localStorage.setItem("taghouse_token", loginData.access_token);
+        localStorage.setItem("taghouse_email", email);
+        localStorage.setItem("taghouse_name", fullName);
+        localStorage.setItem("taghouse_type", selectedType);
+      }
 
-      document
-        .getElementById("signupForm")
-        .addEventListener("submit", async (e) => {
-          e.preventDefault();
-          const fullName = document.getElementById("fullName").value.trim();
-          const email = document.getElementById("email").value.trim();
-          const password = document.getElementById("password").value;
-          const confirmPw = document.getElementById("confirmPw").value;
-          const confirmErr = document.getElementById("confirmErr");
-          const status = document.getElementById("authStatus");
-          const btn = document.getElementById("submitBtn");
+      status.className = "auth-status success";
+      status.textContent = `✅ Welcome to TagHouse, ${fullName}!`;
+      
+      setTimeout(() => {
+        window.location.href =
+          selectedType === "agent" || selectedType === "owner"
+            ? "owner.html"
+            : "buyer.html";
+      }, 1500);
 
-          if (password !== confirmPw) {
-            confirmErr.classList.add("visible");
-            return;
-          }
-          confirmErr.classList.remove("visible");
-          if (password.length < 8) {
-            status.className = "auth-status error";
-            status.textContent = "❌ Password must be at least 8 characters";
-            return;
-          }
-
-          btn.disabled = true;
-          btn.textContent = "Creating account...";
-          status.className = "auth-status";
-
-          try {
-            const res = await fetch(`${API_BASE}/auth/signup`, {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ email, password, full_name: fullName }),
-            });
-            const data = await res.json();
-            if (!res.ok) throw new Error(data.detail || "Signup failed");
-
-            const loginRes = await fetch(`${API_BASE}/auth/login`, {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ email, password }),
-            });
-            const loginData = await loginRes.json();
-            if (loginRes.ok) {
-              localStorage.setItem("taghouse_token", loginData.access_token);
-              localStorage.setItem("taghouse_email", email);
-              localStorage.setItem("taghouse_name", fullName);
-              localStorage.setItem("taghouse_type", selectedType);
-            }
-
-            status.className = "auth-status success";
-            status.textContent = `✅ Welcome to TagHouse, ${fullName}!`;
-            setTimeout(() => {
-              window.location.href =
-                selectedType === "agent" || selectedType === "owner"
-                  ? "owner.html"
-                  : "buyer.html";
-            }, 1500);
-          } catch (err) {
-            status.className = "auth-status error";
-            status.textContent = "❌ " + err.message;
-            btn.disabled = false;
-            btn.textContent = "Create Free Account";
-          }
-        });
+    } catch (err) {
+      // 6. Graceful Error Fallback (Unfreezes the form)
+      status.className = "auth-status error";
+      status.textContent = "❌ " + err.message;
+      btn.disabled = false;
+      btn.textContent = "Create Free Account";
+    }
+  });
     </script>
   </body>
 </html>

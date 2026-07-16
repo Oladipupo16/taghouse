@@ -368,13 +368,19 @@ h3 {
 }
 
 .service-item,
-.property-card,
 .owner-form,
 .inspection-panel {
-  background: var(--surface);
+  background: var(--);
   border: 1px solid var(--line);
   border-radius: var(--radius);
   box-shadow: 0 14px 32px rgba(180, 183, 181, 0.432);
+}
+.property-card {
+  background: var(--);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: 0 14px 32px rgba(180, 183, 181, 0.432);
+  max-width: fit-content;
 }
 
 .service-item {
@@ -408,7 +414,7 @@ h3 {
 }
 
 .listings-section {
-  background: var(--mist);
+  background: #eeebd8;
 }
 
 .listing-heading {
@@ -439,6 +445,7 @@ h3 {
   display: grid;
   overflow: hidden;
   filter: drop-shadow(0 24px 36px rgba(78, 77, 77, 0.115));
+  width: 100%;
 }
 
 .property-media {
@@ -446,6 +453,7 @@ h3 {
   aspect-ratio: 16 / 10;
   overflow: hidden;
   background: var(--clay);
+  border-radius: var(--radius) var(--radius) 0 0;
 }
 
 .property-carousel {
@@ -761,7 +769,7 @@ h3 {
 }
 
 .listing-dialog::backdrop {
-  background: rgba(20, 24, 22, 0.58);
+  background: rgba(32, 152, 92, 0.58);
 }
 
 .dialog-close {
@@ -1802,21 +1810,55 @@ textarea {
 .contact-hero h1,
 .faq-hero h1,
 .blog-hero h1,
-.careers-hero h1,
 .about-hero h1 {
   font-size: clamp(5rem, 5vw, 3.5rem);
-  margin-bottom: 12px;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-  font-weight: 1000px;
+  margin-bottom: 10px;
+  text-shadow: 0 2px 4px rgba(216, 25, 25, 0.359);
+  font-weight: 100px;
   font-family: "Merriweather", sans-serif;
   color: #debc40;
-  
+}
+.careers-hero h1 {
+  font-size: clamp(5rem, 5vw, 3.5rem);
+  margin-bottom: 10px;
+  text-shadow: 0 2px 4px rgba(216, 25, 25, 0.359);
+  font-weight: 100px;
+  font-family: "Merriweather", sans-serif;
+  color: #debc40;
+}
+/* Clean Global Image Layout */
+.blog-image {
+  width: 100%;
+  height: 220px; /* Controls how tall you want your card images to be */
+  overflow: hidden;
+  border-radius: 8px 8px 0 0; /* Rounds the top corners of the image container */
+  background: var(--surface);
 }
 
+.blog-image img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important; /* Keeps images from stretching or squishing */
+  object-position: center !important;
+  display: block !important;
+}
+
+/* Target the images inside your blog/property cards */
+.blog-card img,
+.property-card .card-image img {
+  width: 100%; /* Forces the image to span the full width of the card */
+  height: 150px; /* Set a fixed height so all cards are completely uniform */
+  object-fit: cover; /* Crops and scales the image perfectly without stretching */
+  object-position: center; /* Ensures the middle of the photo stays visible */
+  border-radius: 8px; /* Optional: adds clean, rounded corners to match a modern UI */
+  display: block; /* Eliminates any weird bottom spacing issues */
+}
 .lead {
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: rgba(255, 255, 255, 0.9);
   margin-bottom: 0;
+  line-height: 1.6;
+  padding-right: 838px;
 }
 
 .agents-search {
@@ -1988,17 +2030,6 @@ textarea {
   transform: translateY(-8px);
   border-color: var(--green);
   box-shadow: 0 20px 40px rgba(19, 107, 76, 0.15);
-}
-
-.blog-image {
-  font-size: 3rem;
-  height: 120px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, #dff1e8, #fffdf8);
-  border-radius: var(--radius);
-  margin-bottom: 16px;
 }
 
 .blog-date {
@@ -2343,6 +2374,7 @@ textarea {
     grid-template-columns: 1fr;
     gap: 16px;
     padding: 0 16px;
+    width: 100%;
   }
 
   /* Fix property cards */
@@ -2352,6 +2384,11 @@ textarea {
 
   .property-media {
     height: 200px;
+    position: relative;
+    aspect-ratio: 16 / 2;
+    overflow: hidden;
+    background: var(--clay);
+    border-radius: var(--radius) var(--radius) 0 0;
   }
 
   /* Fix quick filters */
