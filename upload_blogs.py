@@ -10,22 +10,23 @@ cloudinary.config(
 )
 
 blogs = [
-    "blog-article1",
-    "blog-article2",
-    "blog-article3",
-    "blog-article4",
-    "blog-article5",
-    "blog-article6",
-    "blog-article7",
-    "blog-article8",
-    "blog-article9",
-    "blog-article10",
-    "blog-article11",
-    "blog-article12"
+    "image1",
+    "image2",
+    "image3",
+    "image4",
+    "image5",
+    "image6",
+    "image7",
+    "image8",
+    "image9",
+    "image10",
+    "image11",
+    "image12"
+    
     
 ]
 
-print("🚀 Uploading blog photos...\n")
+print("🚀 Uploading blogs photos...\n")
 
 for blog_id in blogs:
     uploaded = False

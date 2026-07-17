@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Article | TagHouse Blog</title>
+    <meta name="description" content="Read the latest real estate insights from TagHouse." />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      .hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;cursor:pointer;padding:8px;background:none;border:none;flex-shrink:0;}
+      .hamburger span{display:block;width:22px;height:2px;background:var(--ink);border-radius:2px;transition:all 0.28s ease;transform-origin:center;}
+      .hamburger.active span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+      .hamburger.active span:nth-child(2){opacity:0;transform:scaleX(0);}
+      .hamburger.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+      .mobile-menu{display:none;flex-direction:column;position:fixed;top:64px;left:0;right:0;background:white;padding:10px 16px 24px;gap:2px;box-shadow:0 8px 32px rgba(0,0,0,0.13);z-index:9999;border-top:1px solid var(--line);max-height:calc(100vh - 64px);overflow-y:auto;}
+      .mobile-menu.open{display:flex;}
+      .mobile-menu a{padding:13px 16px;font-size:0.97rem;font-weight:500;color:var(--ink);text-decoration:none;border-radius:var(--radius);transition:background 0.15s;display:block;}
+      .mobile-menu a:hover{background:var(--surface);}
+      .mobile-menu-divider{height:1px;background:var(--line);margin:8px 0;}
+      .mobile-menu-action{display:flex;align-items:center;justify-content:center;gap:8px;padding:13px 16px;border-radius:var(--radius);font-weight:800;font-size:0.95rem;text-align:center;margin-top:4px;text-decoration:none;}
+      .mobile-menu-login{border:1.5px solid var(--green);color:var(--green)!important;background:transparent;}
+      .mobile-menu-signup{background:var(--green);color:#debc40!important;margin-top:8px;}
+      @media(max-width:1020px){.hamburger{display:flex;}.main-nav{display:none!important;}.header-action{display:none!important;}}
+      *,*::before,*::after{box-sizing:border-box;}
+      html,body{overflow-x:hidden;width:100%;max-width:100vw;}
+    </style>
+    <style>
+      .article-wrap{max-width:820px;margin:0 auto;padding:40px clamp(16px,4vw,56px) 80px;}
+      .article-back{display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:0.88rem;font-weight:600;margin-bottom:28px;border:none;background:none;font-family:inherit;cursor:pointer;padding:0;transition:color 0.2s;}
+      .article-back:hover{color:var(--green);}
+      .article-back svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+      .article-cat{display:inline-block;padding:4px 14px;border-radius:20px;font-size:0.78rem;font-weight:700;color:white;background:var(--green);margin-bottom:14px;}
+      .article-title{font-size:clamp(1.6rem,4vw,2.4rem);font-weight:800;color:var(--ink);line-height:1.25;margin:0 0 16px;}
+      .article-meta{display:flex;align-items:center;gap:16px;color:var(--muted);font-size:0.88rem;margin-bottom:28px;flex-wrap:wrap;}
+      .article-hero-img{width:100%;height:clamp(220px,40vw,420px);object-fit:cover;border-radius:14px;margin-bottom:40px;display:block;}
+      .article-body{font-size:clamp(0.97rem,2vw,1.05rem);line-height:1.8;color:var(--ink);}
+      .article-body h2{font-size:clamp(1.2rem,3vw,1.5rem);font-weight:800;color:var(--ink);margin:40px 0 16px;padding-top:8px;border-top:2px solid var(--line);}
+      .article-body h3{font-size:clamp(1rem,2.5vw,1.2rem);font-weight:700;color:var(--ink);margin:28px 0 12px;}
+      .article-body p{margin:0 0 20px;}
+      .article-body ul,.article-body ol{margin:0 0 20px;padding-left:24px;}
+      .article-body li{margin-bottom:8px;line-height:1.7;}
+      .article-body blockquote{border-left:4px solid var(--green);margin:28px 0;padding:16px 20px;background:var(--green-soft);border-radius:0 8px 8px 0;font-style:italic;color:var(--green);font-weight:600;font-size:1.05rem;}
+      .article-cta{background:var(--green);border-radius:14px;padding:32px;text-align:center;margin:48px 0 0;}
+      .article-cta h3{color:white;font-size:1.3rem;font-weight:800;margin:0 0 8px;}
+      .article-cta p{color:rgba(255,255,255,0.78);font-size:0.93rem;margin:0 0 20px;}
+      .article-cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+      .related-section{margin-top:56px;}
+      .related-section h3{font-size:1.2rem;font-weight:800;margin:0 0 20px;color:var(--ink);}
+      .related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+      .related-card{background:white;border-radius:10px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.07);cursor:pointer;transition:transform 0.2s;text-decoration:none;display:block;}
+      .related-card:hover{transform:translateY(-3px);}
+      .related-card img{width:100%;height:120px;object-fit:cover;display:block;}
+      .related-card-body{padding:12px;}
+      .related-card-body span{font-size:0.72rem;color:var(--muted);}
+      .related-card-body h4{font-size:0.88rem;font-weight:700;color:var(--ink);margin:4px 0 0;line-height:1.4;}
+      @media(max-width:600px){
+        .article-wrap{padding:24px 16px 60px;}
+        .related-grid{grid-template-columns:1fr 1fr;}
+        .article-cta-btns{flex-direction:column;}
+        .site-footer{grid-template-columns:1fr!important;gap:28px;padding:40px clamp(16px,4vw,32px)!important;}
+        .footer-bottom{flex-direction:column!important;gap:10px;text-align:center;}
+      }
+      @media(max-width:400px){.related-grid{grid-template-columns:1fr;}}
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="TagHouse home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" role="img">
+            <path d="M3 11.2 12 4l9 7.2v8.1a1.7 1.7 0 0 1-1.7 1.7h-4.4v-6.2H9.1V21H4.7A1.7 1.7 0 0 1 3 19.3v-8.1Z" />
+            <path d="M9 21v-6.2h6V21" />
+          </svg>
+        </span>
+        <span>TagHouse</span>
+      </a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="buyer.html">Find Property</a>
+        <a href="owner.html">List Property</a>
+        <a href="agents.html">Agents</a>
+        <a href="blog.html" class="active">Blog</a>
+        <a href="about.html">About</a>
+      </nav>
+      <a class="header-action" href="owner.html">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
+        List Now
+      </a>
+      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </header>
+    <nav class="mobile-menu" id="mobileMenu">
+      <a href="index.html"> Home</a>
+      <a href="buyer.html">Find Property</a>
+      <a href="owner.html">List Property</a>
+      <a href="agents.html">Agents</a>
+      <a href="blog.html">Blog</a>
+      <a href="about.html">About</a>
+      <div class="mobile-menu-divider"></div>
+      <a href="owner.html" class="mobile-menu-action" style="border:1.5px solid var(--green);color:var(--green);background-color: #debc40;">
+       
+        List Now
+      </a>
+      <a href="login.html" class="mobile-menu-action mobile-menu-login" style="margin-top:6px;">Login</a>
+      <a href="signup.html" class="mobile-menu-action mobile-menu-signup" style="margin-top:6px;">Sign Up Free</a>
+    </nav>
+    <main>
+      <div class="article-wrap" id="articleWrap">
+        <p style="color:var(--muted);padding:40px 0;">Loading article...</p>
+      </div>
+    </main>
+    <footer class="site-footer">
+      <div>
+        <a class="brand footer-brand" href="index.html">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" role="img">
+              <path d="M3 11.2 12 4l9 7.2v8.1a1.7 1.7 0 0 1-1.7 1.7h-4.4v-6.2H9.1V21H4.7A1.7 1.7 0 0 1 3 19.3v-8.1Z" />
+              <path d="M9 21v-6.2h6V21" />
+            </svg>
+          </span>
+          <span>TagHouse</span>
+        </a>
+        <p>Your source for real estate insights and market trends.</p>
+      </div>
+      <div class="footer-section">
+        <h5>Quick Links</h5>
+        <div class="footer-links">
+          <a href="buyer.html">Find Property</a>
+          <a href="owner.html">List Property</a>
+          <a href="blog.html">Blog</a>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h5>Company</h5>
+        <div class="footer-links">
+          <a href="about.html">About Us</a>
+          <a href="careers.html">Careers</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h5>Support</h5>
+        <div class="footer-links">
+          <a href="faq.html">FAQ</a>
+          <a href="privacy-policy.html">Privacy</a>
+          <a href="terms-of-service.html">Terms</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 TagHouse. All rights reserved.</span>
+        <div class="footer-legal">
+          <a href="privacy-policy.html">Privacy Policy</a>
+          <a href="terms-of-service.html">Terms of Service</a>
+        </div>
+      </div>
+    </footer>
+    <script>
+    var ARTICLES = [{"id": "first-time-home-buyers", "date": "June 1, 2026", "category": "Buyers Guide", "title": "5 Essential Tips for First-Time Home Buyers in Nigeria", "excerpt": "Buying your first home is a major milestone. Learn how to avoid common pitfalls, verify property titles, negotiate prices, and secure the best mortgage options available in Nigeria's market.", "image": "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80", "read_time": "8 min read", "content": "<p>Buying your first home in Nigeria is one of the most significant financial decisions you will ever make. With the right knowledge, you can navigate the process confidently and avoid costly mistakes.</p><h2>1. Verify the Property Title First</h2><p>The most critical step before making any payment is verifying the property title. In Nigeria, there are several types of land titles:</p><ul><li><strong>Certificate of Occupancy (C of O):</strong> The strongest form of title, issued by the state government</li><li><strong>Right of Occupancy (R of O):</strong> Valid in certain states</li><li><strong>Deed of Assignment:</strong> Common for properties in estates</li><li><strong>Survey Plan:</strong> Essential for defining property boundaries</li></ul><p>Always engage a qualified lawyer to verify any title at the relevant Land Registry before paying any deposit.</p><h2>2. Work with a Verified Agent</h2><p>A verified agent with local knowledge can save you time, money, and heartache. Look for agents registered with the Nigerian Institution of Estate Surveyors and Valuers (NIESV). On TagHouse, all agents undergo identity verification and background checks before being listed.</p><h2>3. Inspect the Property Thoroughly</h2><p>Never buy a property without a physical inspection. Check for structural integrity, electrical wiring, plumbing, flooding history, and neighbourhood security.</p><h2>4. Understand All the Costs</h2><p>Budget for legal fees (5-10%), agency commission (5-10%), survey fees, Governor consent fees, stamp duty, and renovation costs beyond the purchase price.</p><h2>5. Negotiate Firmly</h2><p>Most property listings in Nigeria have room for negotiation. Research comparable properties, understand the seller motivation, and make a reasonable offer below the asking price.</p><blockquote>The best investment on earth is earth. - Louis Glickman</blockquote>"}, {"id": "lagos-real-estate-2026", "date": "May 28, 2026", "category": "Market Analysis", "title": "Lagos Real Estate Market: Hotspots & Investment Opportunities 2026", "excerpt": "An in-depth analysis of property prices across Lagos neighborhoods. Which areas are appreciating fastest? Where should you invest for rental income? Our data-driven guide reveals the opportunities.", "image": "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=800&q=80", "read_time": "10 min read", "content": "<p>Lagos remains Nigeria most dynamic real estate market in 2026, with certain neighborhoods delivering exceptional returns.</p><h2>Top Appreciating Areas</h2><h3>Lekki Phase 1 and 2</h3><p>Lekki continues to dominate premium residential demand with 15-20% price appreciation year-on-year. 3-bedroom apartments now range from 45m to 120m naira.</p><h3>Ikoyi</h3><p>The ultra-premium market. Waterfront apartments commanding 200m naira and above. Prices have held firm despite economic pressures.</p><h3>Surulere and Yaba</h3><p>The emerging tech corridor. Demand for rental properties has surged 25% in 12 months as young professionals flood into Yabacon Valley.</p><h3>Sangotedo and Ajah</h3><p>For investors seeking higher yields at lower entry points. Entry prices from 15m naira for 2-bedroom apartments with yields of 10-14%.</p><h2>Rental Yield Analysis</h2><ul><li>Lekki Phase 1: 6-8% gross yield</li><li>Victoria Island: 5-7% gross yield</li><li>Yaba/Surulere: 8-12% gross yield</li><li>Sangotedo/Ajah: 10-14% gross yield</li></ul>"}, {"id": "property-inspection-checklist", "date": "May 20, 2026", "category": "Buyers Guide", "title": "The Complete Property Inspection Checklist for Buyers", "excerpt": "Before you commit, you need to know what to look for. Our comprehensive checklist covers structural issues, electrical systems, plumbing, security, and the red flags to watch for.", "image": "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=800&q=80", "read_time": "7 min read", "content": "<p>A thorough property inspection can save you from expensive surprises after purchase.</p><h2>Structural Inspection</h2><ul><li>Check walls for cracks - wide diagonal cracks indicate structural movement</li><li>Inspect the roof from outside for missing or damaged sheets</li><li>Check ceiling for water stains from roof leaks</li><li>Test floors for soft spots indicating termite damage</li></ul><h2>Electrical Systems</h2><ul><li>Inspect the distribution board - is it modern and labelled?</li><li>Test every switch and power outlet</li><li>Check for exposed wiring</li><li>Check prepaid meter installation</li></ul><h2>Plumbing and Water</h2><ul><li>Run all taps and check pressure</li><li>Flush all toilets</li><li>Check under sinks for leaks</li><li>Verify borehole functionality</li></ul><h2>Red Flags</h2><ul><li>Fresh paint hiding cracks or damp</li><li>Strong air fresheners masking mould</li><li>Seller refusing inspection</li><li>No clean title documents available</li><li>Evidence of flooding on walls</li></ul>"}, {"id": "property-titles-nigeria", "date": "May 15, 2026", "category": "Legal Guide", "title": "Understanding Property Titles: C of O, Survey Plans & Land Registration", "excerpt": "Confused about Nigerian property titles? We break down C of O, survey plans, and how to verify clear titles before making an offer. Protect yourself from fraudulent claims.", "image": "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&q=80", "read_time": "9 min read", "content": "<p>Understanding Nigerian land titles is essential before any property transaction.</p><h2>Types of Land Titles</h2><h3>Certificate of Occupancy (C of O)</h3><p>The strongest form of land title in Nigeria, issued by the State Governor under the Land Use Act of 1978. A C of O grants 99 years of statutory right of occupancy - the gold standard every buyer should aim for.</p><h3>Deed of Assignment</h3><p>A legal document transferring ownership from one party to another. Common in estates. The chain of deeds must be traceable back to the original title holder.</p><h3>Governor Consent</h3><p>Any transfer of property held under a C of O requires Governor Consent. Without this, the transfer is technically void under Nigerian law.</p><h2>How to Verify a Title</h2><ol><li>Obtain original title documents</li><li>Search the Land Registry in the relevant state</li><li>Commission a survey to confirm boundaries</li><li>Engage a qualified property lawyer</li><li>Check for any encumbrances or pending litigation</li></ol><h2>Common Fraud Schemes</h2><ul><li>Selling family land without consent of all heirs</li><li>Forged documents with authentic-looking seals</li><li>Multiple sales of the same property</li><li>Selling government-acquired land</li></ul>"}, {"id": "investment-properties-passive-income", "date": "May 10, 2026", "category": "Investment", "title": "Investment Properties: Generating Passive Income from Real Estate", "excerpt": "Learn how to identify high-yield rental properties, calculate ROI, manage tenant relationships, and structure your portfolio for long-term success.", "image": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80", "read_time": "11 min read", "content": "<p>Real estate remains one of the most reliable wealth-building tools for Nigerians.</p><h2>Calculating Return on Investment</h2><p><strong>Gross Rental Yield = (Annual Rent divided by Property Value) x 100</strong></p><p>Example: A property worth 20m naira generating 2m annual rent equals 10% gross yield. Aim for a minimum of 8% for residential properties.</p><h2>Best Property Types for Passive Income</h2><h3>Mini Flats and Studio Apartments</h3><p>Highest demand, fastest to let. University towns and commercial cities like Lagos, Abuja, and Port Harcourt have strong demand for affordable studio units.</p><h3>Short-Let Apartments</h3><p>In prime locations like Lekki and VI, short-let properties can generate 2-3x the income of traditional long-let arrangements.</p><h2>Managing Your Investment</h2><ul><li>Use a professional property manager at 10% of rental income</li><li>Screen tenants thoroughly with employment verification</li><li>Have a proper tenancy agreement drafted by a lawyer</li><li>Build a maintenance reserve of 10-15% of annual rent</li></ul>"}, {"id": "abuja-real-estate-boom", "date": "May 5, 2026", "category": "Market Analysis", "title": "Abuja Real Estate Boom: Emerging Areas Worth Watching", "excerpt": "Abuja real estate market is evolving fast. Discover which districts are attracting investors and where savvy buyers are placing their bets for appreciation.", "image": "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80", "read_time": "8 min read", "content": "<p>Abuja planned city structure makes it unique among Nigerian real estate markets.</p><h2>Established Premium Zones</h2><h3>Maitama and Asokoro</h3><p>Traditional premium addresses for diplomats and top executives. 4-5 bedroom detached homes range from 200m to 800m naira.</p><h3>Wuse II and Garki</h3><p>Commercial and residential blend with strong demand for serviced apartments from corporate tenants. Rental yields at 7-9%.</p><h2>Emerging Areas</h2><h3>Karsana and Karsana West</h3><p>One of Abuja fastest-appreciating suburbs. Entry point from 12m naira for decent plots due to airport road proximity.</p><h3>Guzape and Apo</h3><p>The up-and-coming premium suburb attracting investors priced out of Maitama, with modern estate developments on beautiful terrain.</p>"}, {"id": "real-estate-regulations-2026", "date": "April 30, 2026", "category": "Legal Guide", "title": "New Real Estate Regulations: What Buyers & Sellers Need to Know", "excerpt": "Government regulations around property transactions are changing. Stay informed about new compliance requirements, tax implications, and how these affect your strategy.", "image": "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80", "read_time": "7 min read", "content": "<p>The regulatory landscape for Nigerian real estate is evolving rapidly.</p><h2>Key Changes in 2026</h2><h3>Anti-Money Laundering Compliance</h3><p>SCUML now requires all real estate professionals to register and comply with AML regulations, especially for transactions above 50m naira.</p><h3>Digital Land Registry</h3><p>Lagos and Abuja FCT are accelerating digital land registry initiatives to make title searches faster and reduce fraud.</p><h2>Tax Obligations</h2><ul><li>Capital Gains Tax: 10% on profit from property disposal</li><li>Stamp Duty: 1.5% of purchase price or market value</li><li>Withholding Tax: 10% on rental income paid by companies</li><li>VAT: 7.5% on professional fees including agency commissions</li></ul>"}, {"id": "remote-work-real-estate", "date": "April 25, 2026", "category": "Lifestyle", "title": "Remote Work & Real Estate: Relocating for the New Normal", "excerpt": "With remote work becoming permanent for many, people are rethinking where they live. Explore how this trend is reshaping Nigeria real estate market.", "image": "https://images.unsplash.com/photo-1585974738771-84483dd9f89f?w=800&q=80", "read_time": "6 min read", "content": "<p>The remote work revolution is quietly reshaping Nigeria real estate market.</p><h2>Migration Away from Lagos</h2><p>For the first time in decades, we are seeing meaningful migration of young professionals away from Lagos Island. Many are relocating to Ibadan, Enugu, Jos, and Calabar for larger homes at lower costs.</p><h2>What Remote Workers Want</h2><ul><li>Dedicated home office space or spare bedroom</li><li>Reliable internet infrastructure including fibre broadband</li><li>Steady power supply or estate generator</li><li>Comfortable living and outdoor space</li></ul><h2>Investment Opportunity</h2><p>Properties with dedicated home office features command a 10-15% premium in urban markets. Developers building with remote workers in mind are seeing faster sales.</p>"}, {"id": "avoiding-real-estate-fraud", "date": "April 20, 2026", "category": "Security", "title": "Secure Your Real Estate Investment: Avoiding Fraud & Scams", "excerpt": "Property fraud is common. Protect yourself by understanding common scams, how to verify agent credentials, secure payment methods, and the red flags that indicate a dishonest deal.", "image": "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&q=80", "read_time": "8 min read", "content": "<p>Property fraud costs Nigerians billions of naira annually. Here is how to protect yourself.</p><h2>Common Real Estate Scams</h2><h3>Landlord Impersonation</h3><p>A fraudster poses as the property owner, collects rent or deposit, and disappears. Always meet the actual landlord and insist on seeing original title documents.</p><h3>Multiple Sales Fraud</h3><p>The same property is sold to multiple buyers simultaneously. Conduct a Land Registry search and use escrow for payment.</p><h3>Family Land Disputes</h3><p>One family member sells communal land without consent of all heirs. Always require a Family Resolution document.</p><h2>How to Protect Yourself</h2><ol><li>Use escrow - never pay directly to the seller until documents are verified</li><li>Hire a lawyer - non-negotiable for any property transaction</li><li>Visit the Land Registry and conduct a physical search</li><li>Use verified platforms like TagHouse that vet their agents</li><li>Trust your instincts - if a deal seems too good to be true, it probably is</li></ol>"}, {"id": "port-harcourt-commercial-real-estate", "date": "April 15, 2026", "category": "Market Analysis", "title": "Port Harcourt Commercial Real Estate: Trends & Opportunities", "excerpt": "Oil and gas sector dynamics are reshaping Port Harcourt commercial property market. Learn where to find opportunities in this evolving landscape.", "image": "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80", "read_time": "7 min read", "content": "<p>Port Harcourt commercial real estate market is undergoing significant transformation driven by oil sector changes and economic diversification.</p><h2>The Oil Sector Effect</h2><p>The commercial district of GRA Phase 1, GRA Phase 2, and D-Line houses the offices of major oil companies and their service providers. This remains the most premium commercial zone in the city.</p><h2>Emerging Commercial Zones</h2><h3>Trans-Amadi Industrial Layout</h3><p>Nigeria most active industrial zone outside Lagos. Strong demand for warehousing and manufacturing facilities. Average industrial plot ranges from 25m to 60m naira.</p><h3>Rumuola and Rumuigbo</h3><p>Fast-emerging commercial corridor connecting old Port Harcourt to the airport. Entry-level commercial properties from 8m naira.</p><h2>New Demand Drivers</h2><ul><li>Growing tech startup ecosystem</li><li>Expansion of Nigerian Ports Authority</li><li>Tourism development along the waterfront</li><li>Agricultural processing facilities</li></ul>"}, {"id": "property-pricing-quick-sale", "date": "May 25, 2026", "category": "Sellers Guide", "title": "How to Price Your Property for Quick Sale", "excerpt": "Price too high and your home sits on the market. Price too low and you leave money on the table. Discover the data-backed strategies agents use to find the sweet spot.", "image": "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&q=80", "read_time": "6 min read", "content": "<p>Pricing your property correctly from day one is the single most important factor in achieving a quick sale at the best price.</p><h2>The Danger of Overpricing</h2><p>Properties that sit on the market too long develop a stigma. Research shows the longer a property stays listed, the lower the final sale price compared to asking price.</p><h2>How to Find the Right Price</h2><h3>Comparable Sales Analysis</h3><p>Look at what similar properties in your area have actually sold for in the last 3-6 months. Not what they are asking but what they sold for.</p><h3>Market Conditions</h3><p>In a seller market with more buyers than properties, you can price slightly above comparable sales. In a buyer market with high inventory, price at or below to stand out.</p><h2>The Sweet Spot Strategy</h2><p>Aim to price 5-10% below the highest comparable sale in your area. This creates competitive interest and can lead to multiple offers.</p><blockquote>The right price attracts buyers. The wrong price attracts complaints.</blockquote>"}, {"id": "student-accommodation-guide", "date": "April 10, 2026", "category": "Renters Guide", "title": "Student Accommodation Guide: Finding Affordable Housing Near Universities", "excerpt": "Students and parents searching for housing near universities need practical advice. Discover neighborhoods, pricing, and tips for securing the best student accommodation.", "image": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=800&q=80", "read_time": "6 min read", "content": "<p>Finding safe, affordable accommodation near Nigerian universities requires strategy.</p><h2>Top University Accommodation Markets</h2><h3>University of Lagos - Yaba</h3><p>Areas: Yaba, Sabo, Iwaya, Abule Ijesha. Average rent 200k-600k per year for self-contained. Start searching 3-4 months before resumption.</p><h3>University of Ibadan</h3><p>Areas: UI campus road, Agbowo, Bodija. Average rent 120k-350k per year. Bodija offers more comfort at higher price points.</p><h3>Ahmadu Bello University - Zaria</h3><p>Areas: Samaru, Tudun Wada. Average rent 80k-200k per year. Most affordable of the major university towns.</p><h2>What to Look For</h2><ul><li>Security with controlled access</li><li>Prepaid meter power supply</li><li>Internet infrastructure</li><li>Walking distance to campus</li><li>Proximity to markets and eateries</li></ul><h2>Tips for Parents</h2><ol><li>Visit in person before paying</li><li>Get a signed tenancy agreement</li><li>Pay by bank transfer not cash</li><li>Ask senior students for recommendations</li></ol>"}];
+    var CAT_COLORS = {"Buyers Guide": "#136b4c", "Market Analysis": "#1d4ed8", "Sellers Guide": "#7c3aed", "Legal Guide": "#b45309", "Investment": "#d99f31", "Lifestyle": "#0891b2", "Security": "#c85d3d", "Renters Guide": "#059669"};
+    var params = new URLSearchParams(window.location.search);
+    var article = ARTICLES.find(function(a){return a.id===params.get('id');});
+    if(!article){
+      document.getElementById('articleWrap').innerHTML='<p style="color:var(--coral);padding:40px 0;">Article not found. <a href="blog.html" style="color:var(--green);">Back to Blog</a></p>';
+    }else{
+      document.title=article.title+' | TagHouse Blog';
+      document.querySelector('meta[name="description"]').content=article.excerpt;
+      var cc=CAT_COLORS[article.category]||'#136b4c';
+      var related=ARTICLES.filter(function(a){return a.id!==article.id;}).slice(0,3);
+      var relHTML=related.map(function(r){
+        return '<a class="related-card" href="blog-article.html?id='+r.id+'">'
+          +'<img src="'+r.image+'" alt="'+r.title+'" loading="lazy" />'
+          +'<div class="related-card-body"><span>'+r.category+'</span><h4>'+r.title+'</h4></div>'
+          +'</a>';
+      }).join('');
+      document.getElementById('articleWrap').innerHTML=
+        '<button class="article-back" onclick="window.location.href=\'blog.html\'">'
+        +'<svg viewBox="0 0 24 24"><path d="M19 12H5M5 12l7 7M5 12l7-7"/></svg>Back to Blog</button>'
+        +'<span class="article-cat" style="background:'+cc+'">'+article.category+'</span>'
+        +'<h1 class="article-title">'+article.title+'</h1>'
+        +'<div class="article-meta"><span>📅 '+article.date+'</span><span>⏱ '+article.read_time+'</span></div>'
+        +'<img src="'+article.image+'" alt="'+article.title+'" class="article-hero-img" />'
+        +'<div class="article-body">'+article.content+'</div>'
+        +'<div class="article-cta"><h3>Ready to Find Your Next Property?</h3>'
+        +'<p>Browse verified listings across Nigeria and connect with trusted agents today.</p>'
+        +'<div class="article-cta-btns">'
+        +'<a href="buyer.html" class="primary-button" style="background:var(--gold);color:var(--ink);">Browse Listings</a>'
+        +'<a href="agents.html" class="secondary-button" style="color:white;border-color:rgba(255,255,255,0.4);">Find an Agent</a>'
+        +'</div></div>'
+        +'<div class="related-section"><h3>More Articles</h3><div class="related-grid">'+relHTML+'</div></div>';
+    }
+    </script>
+    <script>
+    (function(){
+      var ham=document.getElementById('hamburger'),menu=document.getElementById('mobileMenu');
+      if(!ham||!menu)return;
+      ham.addEventListener('click',function(e){e.stopPropagation();var o=menu.classList.toggle('open');ham.classList.toggle('active',o);ham.setAttribute('aria-expanded',String(o));});
+      document.addEventListener('click',function(e){if(!ham.contains(e.target)&&!menu.contains(e.target)){menu.classList.remove('open');ham.classList.remove('active');ham.setAttribute('aria-expanded','false');}});
+      menu.querySelectorAll('a').forEach(function(a){if(a.getAttribute('href')==='blog.html'){a.style.color='var(--green)';a.style.fontWeight='700';}});
+      var token=localStorage.getItem('taghouse_token'),name=localStorage.getItem('taghouse_name')||localStorage.getItem('taghouse_email')||'';
+      if(token){
+        var sn=name.split('@')[0]||'Account',action=document.querySelector('.header-action');
+        if(action){action.href='#';action.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true" style="width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> '+sn;action.addEventListener('click',function(e){e.preventDefault();if(confirm('Log out?')){['taghouse_token','taghouse_email','taghouse_name','taghouse_type'].forEach(function(k){localStorage.removeItem(k);});window.location.href='index.html';}});}
+        var lb=menu.querySelector('.mobile-menu-login'),sb=menu.querySelector('.mobile-menu-signup');
+        if(lb){lb.textContent='👤 '+sn;lb.href='#';}
+        if(sb){sb.textContent='Logout';sb.href='#';sb.addEventListener('click',function(e){e.preventDefault();if(confirm('Log out?')){['taghouse_token','taghouse_email','taghouse_name','taghouse_type'].forEach(function(k){localStorage.removeItem(k);});window.location.href='index.html';}});}
+      }
+    })();
+    </script>
+  </body>
+</html>

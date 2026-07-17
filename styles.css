@@ -1793,7 +1793,8 @@ textarea {
 .faq-hero,
 .blog-hero,
 .careers-hero,
-.about-hero {
+.about-hero,
+.blog_article {
   background:
     linear-gradient(135deg, rgba(18, 109, 77, 0.723), rgba(13, 85, 65, 0.818)),
     url(assets/about-hero.png);
@@ -1817,6 +1818,7 @@ textarea {
   font-weight: 100px;
   font-family: "Merriweather", sans-serif;
   color: #debc40;
+  text-align: left;
 }
 .careers-hero h1 {
   font-size: clamp(5rem, 5vw, 3.5rem);
@@ -1826,39 +1828,30 @@ textarea {
   font-family: "Merriweather", sans-serif;
   color: #debc40;
 }
-/* Clean Global Image Layout */
-.blog-image {
+.blog-card-img {
   width: 100%;
-  height: 220px; /* Controls how tall you want your card images to be */
-  overflow: hidden;
-  border-radius: 8px 8px 0 0; /* Rounds the top corners of the image container */
-  background: var(--surface);
-}
-
-.blog-image img {
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: cover !important; /* Keeps images from stretching or squishing */
-  object-position: center !important;
-  display: block !important;
-}
-
-/* Target the images inside your blog/property cards */
-.blog-card img,
-.property-card .card-image img {
-  width: 100%; /* Forces the image to span the full width of the card */
-  height: 150px; /* Set a fixed height so all cards are completely uniform */
-  object-fit: cover; /* Crops and scales the image perfectly without stretching */
-  object-position: center; /* Ensures the middle of the photo stays visible */
-  border-radius: 8px; /* Optional: adds clean, rounded corners to match a modern UI */
-  display: block; /* Eliminates any weird bottom spacing issues */
+  height: 180px;
+  object-fit: cover;
+  border-radius: var(--radius);
 }
 .lead {
-  font-size: 1rem;
+  font-size: 1.25rem;
   color: rgba(255, 255, 255, 0.9);
   margin-bottom: 0;
   line-height: 1.6;
-  padding-right: 838px;
+  padding-right: 38px;
+  font-style: italic;
+  font-family: "Merriweather", sans-serif;
+}
+.lean {
+  font-size: 1.25rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 0;
+  line-height: 1.9;
+  padding-right: 38px;
+  font-style: italic;
+  font-family: "Merriweather", sans-serif;
+  margin-bottom: 50px;
 }
 
 .agents-search {
@@ -2030,6 +2023,17 @@ textarea {
   transform: translateY(-8px);
   border-color: var(--green);
   box-shadow: 0 20px 40px rgba(19, 107, 76, 0.15);
+}
+
+.blog-image {
+  font-size: 3rem;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #dff1e8, #fffdf8);
+  border-radius: var(--radius);
+  margin-bottom: 16px;
 }
 
 .blog-date {
